@@ -1,0 +1,4 @@
+django
+django-mptt
+django-bootstrap4
+django-widget-tweaks

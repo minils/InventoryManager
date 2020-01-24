@@ -1,0 +1,34 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-auto">
+    <h2>{{ category.name }}</h2>
+    </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:categoryedit' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
+    <a href="{% url 'inventory:categorydelete' category.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+  </div>
+</div>
+{% include 'inventory/breadcrumbs.html' with root=category reflink='inventory:category' %}
+<p></p>
+<table class="table table-striped">
+  <tr>
+    <th><span class="material-icons">description</span>Description</th>
+    <td>{{ category.description }}</td>
+  </tr>
+</table>
+<h2>Items</h2>
+{% include 'inventory/item_list.html' with list=category.item_set.all %}
+<div class="row">
+  <div class="col-auto">
+    <h2>Subcategories</h2>
+  </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:categorynew' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
+  </div>
+</div>
+{% include 'inventory/category_list_atom.html' with category_list=category.get_descendants.all %}
+<p></p>
+{% include 'inventory/back.html' %}
+{% endblock %}

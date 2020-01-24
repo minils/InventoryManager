@@ -1,0 +1,17 @@
+{% load mptt_tags %}
+{% if location_list %}
+<ul class="list-group">
+  {% recursetree location_list %}
+  <li class="list-group-item">
+    <a class="list-group-item" href="{% url 'inventory:location' node.pk %}">{{ node.name }}</a>
+    {% if not node.is_leaf_node %}
+    <ul class="list-group">
+      {{ children }}
+    </ul>
+    {% endif %}
+  </li>
+  {% endrecursetree %}
+</ul>
+{% else %}
+<p>None</p>
+{% endif %}

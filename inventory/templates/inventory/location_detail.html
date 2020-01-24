@@ -1,0 +1,65 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+{% load mptt_tags %}
+<div class="row">
+  <div class="col-auto">
+    <h2>{{ location.name }}</h2>
+  </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:locationedit' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
+    <a href="{% url 'inventory:locationdelete' location.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+  </div>
+</div>
+{% include 'inventory/breadcrumbs.html' with root=location reflink='inventory:location' %}
+<p></p>
+<table class="table table-striped">
+  <tr>
+    <th><span class="material-icons">description</span>Description</th>
+    <td>{{ location.description }}</td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">space_bar</span>Free space</th>
+    <td><input name="free-space" type="checkbox" checked="{{ location.free_space }}" disabled="true"></td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">search</span>UUID</th>
+    <td>
+      {% if location.uuid %}
+      {{ location.uuid }}
+      <a href="{% url 'inventory:locationuuid' location.pk %}">Edit</a>
+      {% else %}
+      <a href="{% url 'inventory:locationuuid' location.pk %}">Add</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% if location.uuid %}
+  <tr>
+    <th><span class="material-icons">camera_alt</span>Barcode</th>
+    <td>
+      <img src="http://bwipjs-api.metafloor.com/?bcid=datamatrix&text={{ location.uuid }}" width="48" height="48">
+    </td>
+  </tr>
+  {% endif %}
+</table>
+<div class="row">
+  <div class="col-auto">
+    <h2>Items</h2>
+  </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:locationnewitem' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
+  </div>
+</div>
+{% include 'inventory/item_list.html' with list=location.item_set.all %}
+<div class="row">
+  <div class="col-auto">
+    <h2>Sublocations</h2>
+  </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:locationnew' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
+  </div>
+</div>
+{% include 'inventory/location_list_atom.html' with location_list=location.get_descendants.all %}
+<p></p>
+{% include 'inventory/back.html' %}
+{% endblock %}

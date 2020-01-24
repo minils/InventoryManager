@@ -1,0 +1,21 @@
+{% load listoperations %}
+{% load classtag %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <span class="material-icons">
+        {% if root|get_class == 'Category' %}
+        category
+        {% else %}
+        archive
+        {% endif %}
+      </span>
+    </li>
+    {% for ancestor in root.get_ancestors|limitend:"2" %}
+    <li class="breadcrumb-item">
+      <a href="{% url reflink ancestor.pk %}">{{ ancestor.name }}</a>
+    </li>
+    {% endfor %}
+    <li class="breadcrumb-item active" aria-current="page">{{ root.name }}</li>
+  </ol>
+</nav>

@@ -1,0 +1,42 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-auto">
+    <h2>Item</h2>
+  </div>
+  <div class="col-auto">
+    {% include 'inventory/item_actions.html' %}
+  </div>
+</div>
+<p></p>
+<table class="table table-striped">
+  <tr>
+    <th><span class="material-icons">label</span>Name</th>
+    <td>{{ item.name }}</td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">description</span>Description</th>
+    <td>{{ item.description }}</td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">bar_chart</span>Amount</th>
+    <td>{{ item.amount }}</td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">archive</span>Location</th>
+    <td><a href="{% url 'inventory:location' item.location.id %}">{{ item.location.name }}</a></td>
+  </tr>
+  <tr>
+    <th><span class="material-icons">category</span>Category</th>
+    <td><a href="{% url 'inventory:category' item.category.id %}">{{ item.category.name }}</a></td>
+  </tr>
+  {% if item.barcode %}
+  <tr>
+    <th><span class="material-icons">line_weight</span>Barcode</th>
+    <td><a href="https://www.google.com/search?tbm=shop&q={{ item.barcode }}">{{ item.barcode }}</a></td>
+  </tr>
+  {% endif %}
+</table>
+{% include 'inventory/back.html' %}
+{% endblock %}

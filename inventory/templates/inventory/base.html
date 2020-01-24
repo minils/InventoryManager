@@ -1,0 +1,86 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Inventory Manager</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      th .material-icons,
+      .navbar-brand .material-icons {
+          vertical-align: -5px;
+          margin-right: 5px;
+      }
+      
+      .btn .material-icons {
+          vertical-align: -5px
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'inventory:index' %}">
+        <span class="material-icons">archive</span>
+        Inventory Manager
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item{% if nav_item == 'Home' %} active{% endif %}">
+            <a class="nav-link" href="{% url 'inventory:index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item{% if nav_item == 'Locations' %} active{% endif %}">
+            <a class="nav-link" href="{% url 'inventory:locations' %}">Locations</a>
+          </li>
+          <li class="nav-item{% if nav_item == 'Categories' %} active{% endif %}">
+            <a class="nav-link" href="{% url 'inventory:categories' %}">Categories</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'inventory:locationnewitem' 1 %}">New Item</a>
+              <a class="dropdown-item" href="{% url 'inventory:locationnew' 1 %}">New Location</a>
+              <a class="dropdown-item" href="{% url 'inventory:locationnew' 1 %}">New Category</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="inventory/location/find/">Find location</a>
+              <a class="dropdown-item" href="inventory/item/findfreeslot/">Find free slot</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline" action="{% url 'inventory:search' %}" method="get">
+          {#% csrf_token %#}
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ search_term|default:"" }}">
+          <input type="hidden" name="type" value="item">
+          <button class="btn btn-outline-primary my-2 my-sm-0 material-icons" type="submit">search</button>
+        </form>
+        <form class="form-inline" action="loginlogout" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary ml-2">
+            <span class="material-icons">
+              lock
+            </span>
+            Logout
+          </button>
+        </form>
+      </div>
+    </nav>
+    <br>
+    <div class="content container">
+      <div class="row">
+        <div class="col-md-12">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

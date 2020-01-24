@@ -1,0 +1,9 @@
+<a href="#"  class="btn btn-outline-secondary btn-sm">
+  <span class="material-icons">control_point_duplicate</span>
+</a>
+<a href="{% url 'inventory:itemedit' item.pk %}" class="btn btn-outline-primary btn-sm">
+  <span class="material-icons">edit</span>
+</a>
+<a href="{% url 'inventory:itemdelete' item.pk %}" class="btn btn-outline-danger btn-sm">
+  <span class="material-icons">delete</span>
+</a>

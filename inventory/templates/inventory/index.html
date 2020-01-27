@@ -5,18 +5,20 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th><span class="material-icons">bar_chart</span></th>
       <th><span class="material-icons">label</span>Name</th>
       <th><span class="material-icons">archive</span>Location</th>
       <th><span class="material-icons">category</span>Category</th>
-      <th><span class="material-icons">create</span>Created</th>
+      <th class="d-none d-md-table-cell"><span class="material-icons">create</span>Created</th>
     </tr>
   </thead>
   {% for item in latest_items %}
   <tr>
+    <td>{{ item.amount }}</td>
     <td><a href="{% url 'inventory:item' item.pk %}">{{ item.name }}</a></td>
     <td><a href="{% url 'inventory:location' item.location.pk %}">{{ item.location }}</a></td>
     <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
-    <td>{{ item.creation_date }}</td>
+    <td class="d-none d-md-table-cell">{{ item.creation_date|date:'d. M. H:i' }}</td>
   </tr>
   {% endfor %}
 </table>
@@ -32,7 +34,7 @@
   {% for category in categories %}
   <tr>
     <td><a href="{% url 'inventory:category' category.pk %}">{{ category.name }}</a></td>
-    <td>{{ category.creation_date }}</td>
+    <td>{{ category.creation_date|date:'d. M. H:i' }}</td>
   </tr>
   {% endfor %}
 </table>
@@ -48,7 +50,7 @@
   {% for location in locations %}
   <tr>
     <td><a href="{% url 'inventory:location' location.pk %}">{{ location.name }}</a></td>
-    <td>{{ location.creation_date }}</td>
+    <td>{{ location.creation_date|date:'d. M. H:i' }}</td>
   </tr>
   {% endfor %}
 </table>

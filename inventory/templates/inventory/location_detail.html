@@ -2,6 +2,11 @@
 
 {% block content %}
 {% load mptt_tags %}
+{% if error_message %}
+<p class="alert alert-danger">
+  {{ error_message }}
+</p>
+{% endif %}
 <div class="row">
   <div class="col-auto">
     <h2>{{ location.name }}</h2>
@@ -26,10 +31,10 @@
     <th><span class="material-icons">search</span>UUID</th>
     <td>
       {% if location.uuid %}
-      {{ location.uuid }}
-      <a href="{% url 'inventory:locationuuid' location.pk %}">Edit</a>
+      {# location.uuid #}
+      <a href="{% url 'inventory:locationedituuid' location.pk %}">Edit</a>
       {% else %}
-      <a href="{% url 'inventory:locationuuid' location.pk %}">Add</a>
+      <a href="{% url 'inventory:locationedituuid' location.pk %}">Add</a>
       {% endif %}
     </td>
   </tr>

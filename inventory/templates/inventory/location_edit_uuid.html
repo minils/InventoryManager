@@ -1,0 +1,35 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<script>
+  function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+</script>
+<h1>Edit: {{ location.name }}</h1>
+<form action="{% url 'inventory:locationedituuid' location.pk %}" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-12 col-sm-12 col-lg-6">
+      <div class="form-group">
+        {{ form.uuid.label_tag }}
+        <input class="form-control" type="text" name="{{ form.uuid.html_name }}" id="{{ form.uuid.id_for_label }}" size="36" maxlength="36" style="font-family: monospace" value="{{ form.uuid.value }}" />
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="generate" class="d-none d-lg-block">&nbsp;</label>
+        <input class="form-control btn btn-primary" type="button" value="generate" onclick="document.getElementById('{{ form.uuid.id_for_label }}').value=uuidv4()" name="generate" />
+      </div>
+    </div>
+  </div>
+  {{ form.uuid.errors }}
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Save">
+    <input class="btn" type="button" value="Cancel" onclick="window.history.back()">
+    </div>
+</form>
+{% endblock %}

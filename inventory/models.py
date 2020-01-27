@@ -9,7 +9,7 @@ class Location(MPTTModel):
     change_date = models.DateTimeField(auto_now=True)
     parent =  TreeForeignKey('self', on_delete=models.CASCADE, null=True, related_name='children')
     free_space = models.BooleanField(default=True)
-    uuid = models.UUIDField(null=True, blank=True)
+    uuid = models.UUIDField(null=True, blank=True, verbose_name='UUID')
     description = models.CharField(max_length=1000)
 
     def __str__(self):

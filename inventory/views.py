@@ -9,7 +9,7 @@ from django.urls import reverse
 from uuid import UUID
 
 from .models import Item, Location, Category
-from .forms import LocationEditForm, ItemEditForm, CategoryEditForm
+from .forms import LocationEditForm, ItemEditForm, CategoryEditForm, LocationUuidEditForm
 
 logger = logging.getLogger(__name__)
 
@@ -56,11 +56,6 @@ class LocationsView(generic.ListView):
     model = Location
     paginate_by = 25
 
-
-class LocationUuidView(generic.DetailView):
-    model = Location
-    template_name = 'inventory/location_uuid_view.html'
-
 class CategoriesView(generic.ListView):
     model = Category
     paginate_by = 25
@@ -76,20 +71,21 @@ class CategoryView(generic.DetailView):
 class ItemView(generic.DetailView):
     model = Item
 
-def location_uuid_change(request, pk):
+def location_edit_uuid(request, pk):
     location = get_object_or_404(Location, pk=pk)
-    try:
-        uuid = UUID(request.POST['uuid'])
-    except (KeyError, ValueError):
-        return render(request, 'inventory/location_uuid_view.html', {
-            'location': location,
-            'error_message': "Invalid UUID"
-        })
+    if request.method == 'POST':
+        form = LocationUuidEditForm(request.POST, instance=location)
+        
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('inventory:location', args=(location.pk,)))
     else:
-        location.uuid = uuid
-        location.save()
-                          
-    return HttpResponseRedirect(reverse('inventory:location', args=(location.pk,)))
+        form = LocationUuidEditForm(instance=location)
+
+    return render(request, 'inventory/location_edit_uuid.html', {
+        'form': form,
+        'location': location,
+    })
 
 
 def location_find_uuid(request, id):
@@ -99,7 +95,7 @@ def location_find_uuid(request, id):
 def item_new(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if request.method == 'POST':
-        form = ItemNewForm(request.POST)
+        form = ItemEditForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -142,6 +138,12 @@ def location_delete(request, pk):
     if pk == 1:
         raise Http404("Cannot delete 'Universe'")
     location = get_object_or_404(Location, pk=pk)
+    if location.children.count() != 0:
+        error_message = "Cannot be deleted because sublocations exist."
+        return render(request, 'inventory/location_detail.html', {
+            'error_message': error_message,
+            'location': location,
+        })
     parent = location.parent
     location.delete()
 
@@ -151,6 +153,12 @@ def category_delete(request, pk):
     if pk == 1:
         raise Http404("Cannot delete 'Everything'")
     category = get_object_or_404(Category, pk=pk)
+    if category.children.count() != 0:
+        error_message = "Cannot be deleted because subcategories exist."
+        return render(request, 'inventory/category_detail.html', {
+            'error_message': error_message,
+            'category': category,
+        })
     parent = category.parent
     category.delete()
 

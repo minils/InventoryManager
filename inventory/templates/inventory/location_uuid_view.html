@@ -10,15 +10,11 @@
 }
 </script>
 <h1>Edit: {{ location.name }}</h1>
-
-{% if location.uuid %}
-Current uuid: {{ location.uuid }}
-{% else %}
-Create uuid:
-<br /><br />
 <form action="{% url 'inventory:locationuuidchange' location.pk %}" method="post">
   {% csrf_token %}
-  <label for="uuid">UUID</label>
+  {% if form %}
+  exists
+  {% endif %}
   <input type="text" name='uuid' id='uuid' size="36" maxlength="36" style="font-family: monospace" />
   <input type="button" value="generate" onclick="document.getElementById('uuid').value=uuidv4()" />
   <br />
@@ -30,5 +26,4 @@ Create uuid:
   <br />
   <input type="button" value="Cancel" onclick="window.location='{% url 'inventory:location' location.pk %}'" /><input type="submit" value="Submit" />
 </form>
-{% endif %}
 {% endblock %}

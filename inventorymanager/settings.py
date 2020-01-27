@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b2@(-3zd0c)$1xu@a*dof2h7cr+3bec_!q!p_dl&2x05b%8pl='
+SECRET_KEY = os.getenv('INVENTORY_SECRET_KEY', 'b2@(-3zd0c)$1xu@a*dof2h7cr+3bec_!q!p_dl&2x05b%8pl=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('INVENTORY_DEBUG_MODE', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -79,10 +79,23 @@ WSGI_APPLICATION = 'inventorymanager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.getenv('INVENTORY_DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.getenv('INVENTORY_DB_NAME', os.path.join(BASE_DIR, 'db.sqlite3')),
     }
 }
+
+e = os.getenv('INVENTORY_DB_USER')
+if e:
+    DATABASES['default']['USER'] = e
+e = os.getenv('INVENTORY_DB_PASSWORD')
+if e:
+    DATABASES['default']['PASSWORD'] = e
+e = os.getenv('INVENTORY_DB_HOST')
+if e:
+    DATABASES['default']['HOST'] = e
+e = os.getenv('INVENTORY_DB_PORT')
+if e:
+    DATABASES['default']['PORT'] = e
 
 
 # Password validation
@@ -107,9 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.getenv('INVENTORY_LANG_CODE', 'en-us')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.getenv('INVENTORY_TIME_ZONE', 'UTC')
 
 USE_I18N = True
 

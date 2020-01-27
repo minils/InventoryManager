@@ -21,3 +21,9 @@ class CategoryEditForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'description', 'parent']
+
+class LocationUuidEditForm(forms.ModelForm):
+
+    class Meta:
+        model = Location
+        fields = ['uuid']

@@ -22,8 +22,8 @@
       }
     </style>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="{% url 'inventory:index' %}">
         <span class="material-icons">archive</span>
         Inventory Manager
@@ -60,27 +60,33 @@
           {#% csrf_token %#}
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{ search_term|default:"" }}">
           <input type="hidden" name="type" value="item">
-          <button class="btn btn-outline-primary my-2 my-sm-0 material-icons" type="submit">search</button>
+          <button class="btn btn-primary my-2 my-sm-0 material-icons" type="submit">search</button>
         </form>
         <form class="form-inline" action="loginlogout" method="post">
           {% csrf_token %}
           <button type="submit" class="btn btn-primary ml-2">
-            <span class="material-icons">
-              lock
-            </span>
-            Logout
+            {% if request.user.is_authenticated %}
+            <span class="material-icons">lock</span>Logout
+            {% else %}
+            <span class="material-icons">lock_open</span>Login
+            {% endif %}
           </button>
         </form>
       </div>
     </nav>
-    <br>
-    <div class="content container">
-      <div class="row">
-        <div class="col-md-12">
-          {% block content %}
-          {% endblock %}
-        </div>
+    <main class="" role="main">
+      {% block before_content %}
+      {% endblock %}
+      <div class="container mt-5">
+        {% block content %}
+        {% endblock %}
       </div>
+    </main>
+    <div class="container">
+      <hr>
     </div>
+    <footer class="container">
+      <p>Inventory Manager v1.0</p>
+    </footer>
   </body>
 </html>

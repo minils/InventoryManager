@@ -3,3 +3,4 @@ django-mptt
 django-bootstrap4
 django-widget-tweaks
 django-mysql
+mysqlclient

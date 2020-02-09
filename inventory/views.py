@@ -43,11 +43,11 @@ class SearchItem(generic.ListView):
             return []
         else:
             if search_type == 'item':
-                results = Item.objects.filter(name__contains=search_term).order_by('name')
+                results = Item.objects.filter(name__icontains=search_term).order_by('name')
             elif search_type == 'location':
-                results = Location.objects.filter(name__contains=search_term).order_by('name')
+                results = Location.objects.filter(name__icontains=search_term).order_by('name')
             elif search_type == 'category':
-                results = Category.objects.filter(name__contains=search_term).order_by('name')
+                results = Category.objects.filter(name__icontains=search_term).order_by('name')
             else:
                 results = []
             return results

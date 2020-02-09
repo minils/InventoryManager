@@ -41,7 +41,7 @@ class Item(models.Model):
     amount = models.IntegerField(default=1, validators=[MinValueValidator(0)])
     description = models.CharField(max_length=1000)
     category = TreeForeignKey(Category, on_delete=models.CASCADE, null=True)
-    barcode = models.IntegerField(blank=True, null=True)
+    barcode = models.BigIntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name

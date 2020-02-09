@@ -1,6 +1,9 @@
 <a href="#"  class="btn btn-outline-secondary btn-sm">
   <span class="material-icons">control_point_duplicate</span>
 </a>
+<a href="{% url 'inventory:itemlend' item.pk %}" class="btn btn-outline-warning btn-sm">
+  <span class="material-icons">assignment_return</span>
+</a>
 <a href="{% url 'inventory:itemedit' item.pk %}" class="btn btn-outline-primary btn-sm">
   <span class="material-icons">edit</span>
 </a>

@@ -1,8 +1,8 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
-<h1>{% trans "Edit Item" %}</h1>
-<form class="form" method="post" action="{% url 'inventory:itemedit' instance.pk %}">
+<h1>{% trans "Lend Item" %}</h1>
+<form class="form" method="post" action="{% url 'inventory:itemlend' instance.pk %}">
   {% csrf_token %}
   {% include 'inventory/form.html' %}
   <div class="form-row">

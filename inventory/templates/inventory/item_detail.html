@@ -37,6 +37,12 @@
     <td><a href="https://www.google.com/search?tbm=shop&q={{ item.barcode }}">{{ item.barcode }}</a></td>
   </tr>
   {% endif %}
+  {% if item.lent %}
+  <tr>
+    <th><span class="material-icons">assignment_return</span>Lent</th>
+    <td>To <b>{{ item.lent_to }}</b> on <b>{{ item.lent_date }}</b> <a href="{% url 'inventory:itemreturn' item.pk %}">return</a></td>
+  </tr>
+  {% endif %}
 </table>
 {% include 'inventory/back.html' %}
 {% endblock %}

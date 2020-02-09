@@ -1,4 +1,5 @@
 {% extends 'inventory/base.html' %}
+{% load i18n %}
 
 {% block content %}
 {% load mptt_tags %}
@@ -20,27 +21,33 @@
 <p></p>
 <table class="table table-striped">
   <tr>
-    <th><span class="material-icons">description</span>Description</th>
+    <th><span class="material-icons">description</span>{% trans "Description" %}</th>
     <td>{{ location.description }}</td>
   </tr>
   <tr>
-    <th><span class="material-icons">space_bar</span>Free space</th>
-    <td><input name="free-space" type="checkbox" checked="{{ location.free_space }}" disabled="true"></td>
+    <th><span class="material-icons">space_bar</span>{% trans "Free space" %}</th>
+    <td><span class="material-icons">
+    {% if location.free_space %}
+    done
+    {% else %}
+    clear
+    {% endif %}
+    </span></td>
   </tr>
   <tr>
-    <th><span class="material-icons">search</span>UUID</th>
+    <th><span class="material-icons">search</span>{% trans "UUID" %}</th>
     <td>
       {% if location.uuid %}
       {# location.uuid #}
-      <a href="{% url 'inventory:locationedituuid' location.pk %}">Edit</a>
+      <a href="{% url 'inventory:locationedituuid' location.pk %}">{% trans "Edit" %}</a>
       {% else %}
-      <a href="{% url 'inventory:locationedituuid' location.pk %}">Add</a>
+      <a href="{% url 'inventory:locationedituuid' location.pk %}">{% trans "Add" %}</a>
       {% endif %}
     </td>
   </tr>
   {% if location.uuid %}
   <tr>
-    <th><span class="material-icons">camera_alt</span>Barcode</th>
+    <th><span class="material-icons">camera_alt</span>{% trans "Barcode" %}</th>
     <td>
       <img src="http://bwipjs-api.metafloor.com/?bcid=datamatrix&text={{ location.uuid }}" width="48" height="48">
     </td>
@@ -49,7 +56,7 @@
 </table>
 <div class="row">
   <div class="col-auto">
-    <h2>Items</h2>
+    <h2>{% trans "Items" %}</h2>
   </div>
   <div class="col-auto">
     <a href="{% url 'inventory:locationnewitem' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
@@ -58,7 +65,7 @@
 {% include 'inventory/item_list.html' with list=location.item_set.all %}
 <div class="row">
   <div class="col-auto">
-    <h2>Sublocations</h2>
+    <h2>{% trans "Sublocations" %}</h2>
   </div>
   <div class="col-auto">
     <a href="{% url 'inventory:locationnew' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>

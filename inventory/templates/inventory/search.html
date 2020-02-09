@@ -1,44 +1,45 @@
 {% extends 'inventory/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>Search</h1>
+<h1>{% trans "Search" %}</h1>
 <form name="searchform">
   <div class="form-row">
     <div class="col-12 col-sm-12 col-lg-6">
       <div class="form-group">
-        <label for="id_search_term">Search term:</label>
+        <label for="id_search_term">{% trans "Search term" %}:</label>
         <input type="text" value="{{ search_term }}" id="id_search_term" class="form-control" name="q">
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <label>Filter:</label>
+        <label>{% trans "Filter" %}:</label>
         <div class="form-control">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="id_item" value="item" {% if search_type == 'item' %}checked{% endif %} onchange="document.searchform.submit()">
-            <label class="form-check-label" for="id_item">Items</label>
+            <label class="form-check-label" for="id_item">{% trans "Items" %}</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="id_location" value="location" {% if search_type == 'location' %}checked{% endif %} onchange="document.searchform.submit()">
-            <label class="form-check-label" for="id_location">Location</label>
+            <label class="form-check-label" for="id_location">{% trans "Location" %}</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="type" id="id_category" value="category"  {% if search_type == 'category' %}checked{% endif %} onchange="document.searchform.submit()">
-            <label class="form-check-label" for="id_category">Categories</label>
+            <label class="form-check-label" for="id_category">{% trans "Categories" %}</label>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="form-group">
-    <input type="submit" value="Search" class="btn btn-primary">
+    <input type="submit" value="{% trans "Search" %}" class="btn btn-primary">
   </div>
 </form>
 {% if error_message %}
-<div class="alert alert-warning">{{ error_message }}</div>
+<div class="alert alert-warning">{% trans error_message %}</div>
 {% else %}
 <hr>
-<h2>Results</h2>
+<h2>{% trans "Results" %}</h2>
 {% if search_type == 'item' %}
 {% include 'inventory/item_list.html' with list=page_obj %}
 {% elif search_type == 'location' %}

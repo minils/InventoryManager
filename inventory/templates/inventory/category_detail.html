@@ -1,4 +1,5 @@
 {% extends 'inventory/base.html' %}
+{% load i18n %}
 
 {% block content %}
 {% if error_message %}
@@ -19,15 +20,15 @@
 <p></p>
 <table class="table table-striped">
   <tr>
-    <th><span class="material-icons">description</span>Description</th>
+    <th><span class="material-icons">description</span>{% trans "Description" %}</th>
     <td>{{ category.description }}</td>
   </tr>
 </table>
-<h2>Items</h2>
+<h2>{% trans "Items" %}</h2>
 {% include 'inventory/item_list.html' with list=category.item_set.all %}
 <div class="row">
   <div class="col-auto">
-    <h2>Subcategories</h2>
+    <h2>{% trans "Subcategories" %}</h2>
   </div>
   <div class="col-auto">
     <a href="{% url 'inventory:categorynew' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>

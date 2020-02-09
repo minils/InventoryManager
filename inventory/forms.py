@@ -8,6 +8,13 @@ class ItemEditForm(forms.ModelForm):
         model = Item
         fields = ['name', 'description', 'amount', 'location', 'category', 'barcode']
 
+
+class ItemLendForm(forms.ModelForm):
+
+    class Meta:
+        model = Item
+        fields = ['lent_to']
+
         
 class LocationEditForm(forms.ModelForm):
 

@@ -1,13 +1,14 @@
+{% load i18n %}
 {% if list %}
 <table class="table table-striped">
   <tr>
     <th><span class="material-icons">bar_chart</span></th>
-    <th><span class="material-icons">label</span>Name</th>
-    <th class="d-none d-md-table-cell"><span class="material-icons">description</span>Description</th>
-    <th><span class="material-icons">archive</span>Location</th>
-    <th><span class="material-icons">category</span>Category</th>
-    <th class="d-none d-sm-table-cell"><span class="material-icons">create</span>Created</th>
-    <th><span class="material-icons">assignment</span>Tools</th>
+    <th><span class="material-icons">label</span>{% trans "Name" %}</th>
+    <th class="d-none d-md-table-cell"><span class="material-icons">description</span>{% trans "Description" %}</th>
+    <th><span class="material-icons">archive</span>{% trans "Location" %}</th>
+    <th><span class="material-icons">category</span>{% trans "Category" %}</th>
+    <th class="d-none d-sm-table-cell"><span class="material-icons">create</span>{% trans "Created" %}</th>
+    <th><span class="material-icons">assignment</span>{% trans "Tools" %}</th>
   </tr>
   {% for item in list %}
   <tr>
@@ -24,5 +25,5 @@
   {% endfor %}
 </table>
 {% else %}
-<p>Empty</p>
+<p>{% trans "Empty" %}</p>
 {% endif %}

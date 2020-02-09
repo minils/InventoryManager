@@ -2,15 +2,16 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from mptt.models import MPTTModel, TreeForeignKey
+from django.utils.translation import gettext as _
 
 class Location(MPTTModel):
-    name = models.CharField(max_length=200)
-    creation_date = models.DateTimeField(default=timezone.now)
-    change_date = models.DateTimeField(auto_now=True)
-    parent =  TreeForeignKey('self', on_delete=models.CASCADE, null=True, related_name='children')
-    free_space = models.BooleanField(default=True)
-    uuid = models.UUIDField(null=True, blank=True, verbose_name='UUID')
-    description = models.CharField(max_length=1000)
+    name = models.CharField(_("Name"), max_length=200)
+    creation_date = models.DateTimeField(_("Creation date"), default=timezone.now)
+    change_date = models.DateTimeField(_("Change date"), auto_now=True)
+    parent =  TreeForeignKey('self', on_delete=models.CASCADE, null=True, related_name='children', verbose_name=_("Parent"))
+    free_space = models.BooleanField(_("Free space"), default=True)
+    uuid = models.UUIDField(_("UUID"), null=True, blank=True)
+    description = models.CharField(_("Description"), max_length=1000)
 
     def __str__(self):
         return self.name
@@ -42,6 +43,9 @@ class Item(models.Model):
     description = models.CharField(max_length=1000)
     category = TreeForeignKey(Category, on_delete=models.CASCADE, null=True)
     barcode = models.BigIntegerField(blank=True, null=True)
+    lent = models.BooleanField(default=False)
+    lent_to = models.CharField(max_length=100, default="")
+    lent_date = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.name

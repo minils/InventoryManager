@@ -1,0 +1,224 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-09 19:55+0000\n"
+"PO-Revision-Date: 2020-02-09 20:56+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.4\n"
+
+#: inventory/models.py:8 inventory/templates/inventory/index.html:12
+#: inventory/templates/inventory/index.html:39
+#: inventory/templates/inventory/index.html:57
+#: inventory/templates/inventory/item_list.html:6
+msgid "Name"
+msgstr "Name"
+
+#: inventory/models.py:9
+msgid "Creation date"
+msgstr "Erstellt"
+
+#: inventory/models.py:10
+msgid "Change date"
+msgstr "Geändert"
+
+#: inventory/models.py:11
+msgid "Parent"
+msgstr "Übergeordnet"
+
+#: inventory/models.py:12 inventory/templates/inventory/location_detail.html:28
+msgid "Free space"
+msgstr "Freier Platz"
+
+#: inventory/models.py:13 inventory/templates/inventory/location_detail.html:38
+#: inventory/templates/inventory/location_find.html:8
+msgid "UUID"
+msgstr "UUID"
+
+#: inventory/models.py:14 inventory/templates/inventory/category_detail.html:23
+#: inventory/templates/inventory/item_list.html:7
+#: inventory/templates/inventory/location_detail.html:24
+msgid "Description"
+msgstr "Beschreibung"
+
+#: inventory/templates/inventory/back.html:2
+msgid "Back"
+msgstr "Zurück"
+
+#: inventory/templates/inventory/base.html:10
+#: inventory/templates/inventory/base.html:35
+#: inventory/templates/inventory/base.html:95
+msgid "Inventory Manager"
+msgstr "Inventar Verwaltung"
+
+#: inventory/templates/inventory/base.html:43
+msgid "Home"
+msgstr "Startseite"
+
+#: inventory/templates/inventory/base.html:46
+#: inventory/templates/inventory/location_list.html:5
+msgid "Locations"
+msgstr "Orte"
+
+#: inventory/templates/inventory/base.html:49
+#: inventory/templates/inventory/category_list.html:5
+#: inventory/templates/inventory/search.html:28
+msgid "Categories"
+msgstr "Kategorien"
+
+#: inventory/templates/inventory/base.html:53
+msgid "More"
+msgstr "Mehr"
+
+#: inventory/templates/inventory/base.html:56
+#: inventory/templates/inventory/item_new.html:5
+msgid "New Item"
+msgstr "Neuer Artikel"
+
+#: inventory/templates/inventory/base.html:57
+#: inventory/templates/inventory/location_new.html:5
+msgid "New Location"
+msgstr "Neuer Ort"
+
+#: inventory/templates/inventory/base.html:58
+#: inventory/templates/inventory/category_new.html:5
+msgid "New Category"
+msgstr "Neue Kategorie"
+
+#: inventory/templates/inventory/base.html:60
+#: inventory/templates/inventory/location_find.html:5
+msgid "Find location"
+msgstr "Ort finden"
+
+#: inventory/templates/inventory/base.html:61
+msgid "Find free slot"
+msgstr "Freien Ort finden"
+
+#: inventory/templates/inventory/base.html:67
+#: inventory/templates/inventory/search.html:5
+#: inventory/templates/inventory/search.html:35
+msgid "Search"
+msgstr "Suche"
+
+#: inventory/templates/inventory/base.html:95
+msgid "Account"
+msgstr "Konto"
+
+#: inventory/templates/inventory/category_detail.html:27
+#: inventory/templates/inventory/location_detail.html:59
+#: inventory/templates/inventory/search.html:20
+msgid "Items"
+msgstr "Artikel"
+
+#: inventory/templates/inventory/category_detail.html:31
+msgid "Subcategories"
+msgstr "Unterkategorien"
+
+#: inventory/templates/inventory/category_new.html:11
+#: inventory/templates/inventory/item_edit.html:10
+#: inventory/templates/inventory/item_lend.html:10
+#: inventory/templates/inventory/item_new.html:11
+#: inventory/templates/inventory/location_new.html:11
+msgid "Save"
+msgstr "Speichern"
+
+#: inventory/templates/inventory/category_new.html:14
+#: inventory/templates/inventory/item_edit.html:13
+#: inventory/templates/inventory/item_lend.html:13
+#: inventory/templates/inventory/item_new.html:14
+#: inventory/templates/inventory/location_new.html:14
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: inventory/templates/inventory/index.html:7
+msgid "Latest Items"
+msgstr "Neuste Artikel"
+
+#: inventory/templates/inventory/index.html:13
+#: inventory/templates/inventory/item_list.html:8
+#: inventory/templates/inventory/search.html:24
+msgid "Location"
+msgstr "Ort"
+
+#: inventory/templates/inventory/index.html:14
+#: inventory/templates/inventory/item_list.html:9
+msgid "Category"
+msgstr "Kategorie"
+
+#: inventory/templates/inventory/index.html:17
+#: inventory/templates/inventory/index.html:40
+#: inventory/templates/inventory/index.html:58
+#: inventory/templates/inventory/item_list.html:10
+msgid "Created"
+msgstr "Erstellt"
+
+#: inventory/templates/inventory/index.html:35
+msgid "Latest Categories"
+msgstr "Neuste Kategorien"
+
+#: inventory/templates/inventory/index.html:53
+msgid "Latest Locations"
+msgstr "Neuste Orte"
+
+#: inventory/templates/inventory/item_edit.html:4
+msgid "Edit Item"
+msgstr "Artikel bearbeiten"
+
+#: inventory/templates/inventory/item_lend.html:4
+msgid "Lend Item"
+msgstr "Artikel ausleihen"
+
+#: inventory/templates/inventory/item_list.html:11
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: inventory/templates/inventory/item_list.html:28
+msgid "Empty"
+msgstr "Leer"
+
+#: inventory/templates/inventory/location_detail.html:42
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: inventory/templates/inventory/location_detail.html:44
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: inventory/templates/inventory/location_detail.html:50
+msgid "Barcode"
+msgstr "Barcode"
+
+#: inventory/templates/inventory/location_detail.html:68
+msgid "Sublocations"
+msgstr "Untergeordnete Orte"
+
+#: inventory/templates/inventory/location_find.html:12
+msgid "Find"
+msgstr "Finden"
+
+#: inventory/templates/inventory/location_findfreeslot.html:5
+msgid "Locations with free slots"
+msgstr "Orte mit freien Plätzen"
+
+#: inventory/templates/inventory/search.html:10
+msgid "Search term"
+msgstr "Suchbegriff"
+
+#: inventory/templates/inventory/search.html:16
+msgid "Filter"
+msgstr "Filter"
+
+#: inventory/templates/inventory/search.html:42
+msgid "Results"
+msgstr "Ergebnisse"

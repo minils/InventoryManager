@@ -1,0 +1,15 @@
+{% extends 'inventory/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Find location" %}</h1>
+<form action="{% url 'inventory:locationfind' %}" type="get">
+  <div class="form-group">
+    <label for="id_uuid">{% trans "UUID" %}</label>
+    <input type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" name="uuid" id="id_uuid" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="submit" value="{% trans "Find" %}" class="btn btn-primary">
+  </div>
+</form>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from uuid import UUID
 
@@ -229,3 +230,10 @@ def location_edit(request, pk):
         'form': form,
         'instance': instance
     })
+
+class AccountsProfile(generic.DetailView):
+    model = User
+    template_name = 'inventory/user_detail.html'
+
+    def get_object(self):
+        return self.request.user

@@ -7,6 +7,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Inventory Manager</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -62,16 +67,16 @@
           <input type="hidden" name="type" value="item">
           <button class="btn btn-primary my-2 my-sm-0 material-icons" type="submit">search</button>
         </form>
-        <form class="form-inline" action="loginlogout" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary ml-2">
-            {% if request.user.is_authenticated %}
-            <span class="material-icons">lock</span>Logout
-            {% else %}
-            <span class="material-icons">lock_open</span>Login
-            {% endif %}
-          </button>
-        </form>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'inventory:logout' %}?next=/" class="btn btn-primary ml-2">
+          <span class="material-icons">lock</span>Logout
+        </a>
+        </button>
+        {% else %}
+        <a href="{% url 'inventory:login' %}" class="btn btn-primary ml-2">
+          <span class="material-icons">lock_open</span>Login
+        </a>
+        {% endif %}
       </div>
     </nav>
     <main class="" role="main">
@@ -86,7 +91,7 @@
       <hr>
     </div>
     <footer class="container">
-      <p>Inventory Manager v1.0</p>
+      <p>Inventory Manager v1.0{% if request.user.is_authenticated %} - <a href="{% url 'inventory:profile' %}">Account</a>{% endif %}</p>
     </footer>
   </body>
 </html>

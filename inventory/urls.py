@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import include, path
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -22,4 +23,7 @@ urlpatterns = [
     path('item/<int:pk>/delete/', views.item_delete, name='itemdelete'),
     path('item/<int:pk>/edit/', views.item_edit, name='itemedit'),
     path('search/', views.SearchItem.as_view(), name='search'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile', views.AccountsProfile.as_view(), name='profile'),
+    #path('accounts/login/', auth_views.LoginView.as_view(template_name='inventory/login.html'), name='login'),
 ]

@@ -137,3 +137,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = '/app/static/'
+
+LOGIN_REDIRECT_URL = '/'

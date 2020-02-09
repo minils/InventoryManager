@@ -1,0 +1,19 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<h1>Account Details</h1>
+<table class="table">
+  <tr>
+    <th>Username</th>
+    <td>{{ user.username }}</td>
+  </tr>
+  <tr>
+    <th>E-Mai</th>
+    <td>{{ user.email }}</td>
+  </tr>
+  <tr>
+    <th>Password</th>
+    <td>******** <a href="{% url 'inventory:password_change' %}">Change</a></td>
+  </tr>
+</table>
+{% endblock %}

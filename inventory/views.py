@@ -25,7 +25,7 @@ def index(request):
         'latest_items': latest_items,
         'categories': categories,
         'locations': locations,
-        'nav_item': 'Home',
+        'nav_item': _("Home"),
     })
 
 class SearchItem(generic.ListView):
@@ -35,10 +35,13 @@ class SearchItem(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_term'] = self.request.GET['q']
-        context['search_type'] = self.request.GET['type']
+        if self.request.GET['type'] in search_types:
+            context['search_type'] = self.request.GET['type']
+        else:
+            context['search_type'] = search_types[0]
         if len(context['search_term']) < 3:
-            context['error_message'] = "Search term must contain at least 3 letters."
-        context['title'] = 'Search'
+            context['error_message'] = _("Search term must contain at least 3 letters.")
+        context['title'] = _("Search")
         return context
     
     def get_queryset(self):
@@ -63,7 +66,7 @@ class LocationsView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Locations'
+        context['title'] = _("Locations")
         return context
     
 
@@ -73,17 +76,17 @@ class CategoriesView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Categories'
+        context['title'] = _("Categories")
         return context
 
 class LocationView(generic.ListView):
     model = Item
     template_name = 'inventory/location_detail.html'
-    paginate_by = 3
+    paginate_by = 10
 
     def get(self, request, *args, **kwargs):
         location = Location.objects.get(pk=kwargs['pk'])
-        self.object_list = Item.objects.filter(location__exact=location)
+        self.object_list = Item.objects.filter(location__exact=location, state__exact='d')
 
         context = self.get_context_data()
         context['location'] = location
@@ -98,7 +101,7 @@ class CategoryView(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         category = Category.objects.get(pk=kwargs['pk'])
-        self.object_list = Item.objects.filter(category__exact=category)
+        self.object_list = Item.objects.filter(category__exact=category, state__exact='d')
 
         context = self.get_context_data()
         context['category'] = category
@@ -111,7 +114,7 @@ class ItemView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Item'
+        context['title'] = _("Item")
         return context
 
 def location_edit_uuid(request, pk):
@@ -126,7 +129,7 @@ def location_edit_uuid(request, pk):
         form = LocationUuidEditForm(instance=location)
 
     return render(request, 'inventory/location_edit_uuid.html', {
-        'title': 'Location Edit',
+        'title': _("Edit Location"),
         'form': form,
         'location': location,
     })
@@ -152,12 +155,13 @@ class LocationFindFreeSlot(generic.ListView):
 def location_find_uuid(request, id):
     location = get_object_or_404(Location, uuid=id)
     return render(request, 'inventory/location_detail.html', {
-        'title': 'Find location',
+        'title': _("Find location"),
         'location': location,
     })
 
 def item_new(request, pk):
     location = get_object_or_404(Location, pk=pk)
+    category = Category.objects.get(pk=1)
     if request.method == 'POST':
         form = ItemEditForm(request.POST)
 
@@ -166,13 +170,13 @@ def item_new(request, pk):
             return HttpResponseRedirect(reverse('inventory:location', args=(pk,)))
 
     else:
-        item = Item(location=location)
+        item = Item(location=location, category=category)
         form = ItemEditForm(instance=item)
 
     return render(request, 'inventory/item_new.html', {
-        'title': 'New item',
+        'title': _("New item"),
         'form': form,
-        'location': get_object_or_404(Location, pk=pk),
+        'location': location,
     })
 
 def item_edit(request, pk):
@@ -188,7 +192,7 @@ def item_edit(request, pk):
         form = ItemEditForm(instance=instance)
 
     return render(request, 'inventory/item_edit.html', {
-        'title': 'Edit item',
+        'title': _("Edit item"),
         'form': form,
         'instance': instance,
     })
@@ -196,9 +200,20 @@ def item_edit(request, pk):
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
     location = item.location
-    item.delete()
+    item.state = 't'
+    item.save()
 
     return HttpResponseRedirect(reverse('inventory:location', args=(location.pk,)))
+
+def item_undelete(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    if item.state != 't':
+        raise Http404(_("Cannot undelete non-trashed item"))
+    item.state = 'd'
+    item.save()
+
+    return HttpResponseRedirect(reverse('inventory:trash', args=()))
+    
 
 def item_lend(request, pk):
     instance = get_object_or_404(Item, pk=pk)
@@ -217,7 +232,7 @@ def item_lend(request, pk):
         form = ItemLendForm(instance=instance)
 
     return render(request, 'inventory/item_lend.html', {
-        'title': 'Lend item',
+        'title': _("Lend item"),
         'form': form,
         'instance': instance,
     })
@@ -235,35 +250,55 @@ def item_return(request, pk):
 
 def location_delete(request, pk):
     if pk == 1:
-        raise Http404("Cannot delete 'Universe'")
+        raise Http404(_("Cannot delete 'Universe'"))
     location = get_object_or_404(Location, pk=pk)
     if location.children.count() != 0:
-        error_message = "Cannot be deleted because sublocations exist."
+        error_message = _("Cannot be deleted because sublocations exist.")
         return render(request, 'inventory/location_detail.html', {
-            'title': 'Delete item',
+            'title': _("Delete item"),
             'error_message': error_message,
             'location': location,
         })
     parent = location.parent
-    location.delete()
+    location.state = 't'
+    location.save()
 
     return HttpResponseRedirect(reverse('inventory:location', args=(parent.pk,)))
 
+def location_undelete(request, pk):
+    location = get_object_or_404(Location, pk=pk)
+    if location.state != 't':
+        raise Http404(_("Cannot undelete non-trashed location"))
+    location.state = 'd'
+    location.save()
+
+    return HttpResponseRedirect(reverse('inventory:trash', args=()))
+
 def category_delete(request, pk):
     if pk == 1:
-        raise Http404("Cannot delete 'Everything'")
+        raise Http404(_("Cannot delete 'Everything'"))
     category = get_object_or_404(Category, pk=pk)
     if category.children.count() != 0:
-        error_message = "Cannot be deleted because subcategories exist."
+        error_message = _("Cannot be deleted because subcategories exist.")
         return render(request, 'inventory/category_detail.html', {
-            'title': 'Delete category',
+            'title': _("Delete category"),
             'error_message': error_message,
             'category': category,
         })
     parent = category.parent
-    category.delete()
+    category.state = 't'
+    category.save()
 
     return HttpResponseRedirect(reverse('inventory:category', args=(parent.pk,)))
+
+def category_undelete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if category.state != 't':
+        raise Http404(_("Cannot undelete non-trashed category"))
+    category.state = 'd'
+    category.save()
+
+    return HttpResponseRedirect(reverse('inventory:trash', args=()))
 
 def category_edit(request, pk):
     instance = get_object_or_404(Category, pk=pk)
@@ -337,3 +372,29 @@ class AccountsProfile(generic.DetailView):
 
     def get_object(self):
         return self.request.user
+
+search_types = ['item', 'category', 'location']
+class TrashView(generic.ListView):
+    paginate_by = 25
+    template_name = 'inventory/trash.html'
+
+    def get(self, request, *args, **kwargs):
+        if 'type' in self.request.GET and self.request.GET['type'] in search_types:
+            search_type = self.request.GET['type']
+        else:
+            search_type = search_types[0]
+
+        if search_type == 'item':
+            self.object_list = Item.objects.filter(state__exact='t')
+        elif search_type == 'location':
+            self.object_list = Location.objects.filter(state__exact='t')
+        elif search_type == 'category':
+            self.object_list = Category.objects.filter(state__exact='t')
+            
+        context = self.get_context_data()
+        context['search_type'] = search_type
+        context['title'] = _("Trash")
+
+        return self.render_to_response(context) 
+
+    

@@ -13,8 +13,7 @@
     <h2>{{ location.name }}</h2>
   </div>
   <div class="col-auto">
-    <a href="{% url 'inventory:locationedit' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
-    <a href="{% url 'inventory:locationdelete' location.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+    {% include 'inventory/location_actions.html' %}
   </div>
 </div>
 {% include 'inventory/breadcrumbs.html' with root=location reflink='inventory:location' %}

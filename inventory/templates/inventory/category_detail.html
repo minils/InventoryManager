@@ -12,8 +12,7 @@
     <h2>{{ category.name }}</h2>
     </div>
   <div class="col-auto">
-    <a href="{% url 'inventory:categoryedit' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
-    <a href="{% url 'inventory:categorydelete' category.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+    {% include 'inventory/category_actions.html' %}
   </div>
 </div>
 {% include 'inventory/breadcrumbs.html' with root=category reflink='inventory:category' %}

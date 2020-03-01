@@ -1,0 +1,36 @@
+{% extends 'inventory/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Trash" %}</h1>
+<form name="trashform">
+  <div class="form-row">
+    <div class="">
+      <div class="form-group">
+        <!--label>{% trans "Filter" %}:</label-->
+        <div class="form-control">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="id_item" value="item" {% if search_type == 'item' %}checked{% endif %} onchange="document.trashform.submit()">
+            <label class="form-check-label" for="id_item">{% trans "Items" %}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="id_location" value="location" {% if search_type == 'location' %}checked{% endif %} onchange="document.trashform.submit()">
+            <label class="form-check-label" for="id_location">{% trans "Locations" %}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="id_category" value="category"  {% if search_type == 'category' %}checked{% endif %} onchange="document.trashform.submit()">
+            <label class="form-check-label" for="id_category">{% trans "Categories" %}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% if search_type == 'item' %}
+{% include 'inventory/item_list.html' with list=page_obj %}
+{% elif search_type == 'location' %}
+{% include 'inventory/location_list_atom.html' with location_list=page_obj %}
+{% elif search_type == 'category' %}
+{% include 'inventory/category_list_atom.html' with category_list=page_obj %}
+{% endif %}
+{% endblock %}

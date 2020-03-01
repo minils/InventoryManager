@@ -1,0 +1,8 @@
+{% if category.state == 'd' %}
+<a href="{% url 'inventory:categoryedit' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
+<a href="{% url 'inventory:categorydelete' category.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+{% else %}
+<a href="{% url 'inventory:categoryundelete' category.pk %}" class="btn btn-outline-secondary btn-sm">
+  <span class="material-icons">restore_from_trash</span>
+</a>
+{% endif %}

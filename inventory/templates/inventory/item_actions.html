@@ -1,12 +1,21 @@
-<a href="#"  class="btn btn-outline-secondary btn-sm">
-  <span class="material-icons">control_point_duplicate</span>
-</a>
-<a href="{% url 'inventory:itemlend' item.pk %}" class="btn btn-outline-warning btn-sm">
+{% load i18n %}
+
+{% if item.state == 'd' %}
+<a href="{% url 'inventory:itemlend' item.pk %}" class="btn btn-outline-warning btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Lend' %}">
   <span class="material-icons">assignment_return</span>
 </a>
-<a href="{% url 'inventory:itemedit' item.pk %}" class="btn btn-outline-primary btn-sm">
+<a href="{% url 'inventory:itemedit' item.pk %}" class="btn btn-outline-primary btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Edit' %}">
   <span class="material-icons">edit</span>
 </a>
-<a href="{% url 'inventory:itemdelete' item.pk %}" class="btn btn-outline-danger btn-sm">
+<a href="{% url 'inventory:itemdelete' item.pk %}" class="btn btn-outline-danger btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete' %}">
   <span class="material-icons">delete</span>
 </a>
+{% else %}
+<a href="{% url 'inventory:itemundelete' item.pk %}" class="btn btn-outline-secondary btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Restore' %}">
+  <span class="material-icons">restore_from_trash</span>
+</a>
+{% endif %}

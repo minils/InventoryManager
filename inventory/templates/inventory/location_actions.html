@@ -1,0 +1,8 @@
+{% if location.state == 'd' %}
+<a href="{% url 'inventory:locationedit' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
+<a href="{% url 'inventory:locationdelete' location.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+{% else %}
+<a href="{% url 'inventory:locationundelete' location.pk %}" class="btn btn-outline-secondary btn-sm">
+  <span class="material-icons">restore_from_trash</span>
+</a>
+{% endif %}

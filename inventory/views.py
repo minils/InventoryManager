@@ -70,6 +70,9 @@ class LocationsView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = _("Locations")
         return context
+
+    def get_queryset(self):
+        return Location.objects.filter(state__exact='d')
     
 
 class CategoriesView(generic.ListView):
@@ -92,6 +95,7 @@ class LocationView(generic.ListView):
 
         context = self.get_context_data()
         context['location'] = location
+        context['location_list'] = location.get_descendants().filter(state__exact='d')
         context['title'] = _("Location")
         return self.render_to_response(context)
 

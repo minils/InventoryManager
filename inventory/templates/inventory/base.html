@@ -27,13 +27,44 @@
           vertical-align: -5px
       }
 
+      .va-5 {
+          vertical-align: -5px;
+      }
+
       th {
           white-space: nowrap;
+      }
+
+      [data-node-id] {
+          cursor: pointer;
+      }
+
+      .w-24 {
+          width: 24px;
       }
     </style>
     <script>
       $(function () {
           $('[data-toggle="tooltip"]').tooltip()
+
+          $(".expanded").each(function() {
+              let nodeid = this.getAttribute('data-node-id')
+              if ($('[data-child-of="' + nodeid + '"]').length == 0) {
+                  $(this).html("")
+                      .removeClass("material-icons va-5 expanded")
+                      .addClass("d-inline-block w-24")
+              }
+              
+          })
+          
+          $('[data-node-id]').click(function() {
+              let $this = $(this)
+              $this.html($this.hasClass("expanded")?"keyboard_arrow_right":"keyboard_arrow_down")
+              $this.toggleClass("expanded")
+              let nodeid = this.getAttribute('data-node-id')
+              $('[data-child-of="' + nodeid + '"]').toggle()
+              $('[data-child-of="' + nodeid + '"] .expanded').trigger("click")
+          })
       })
     </script>
   </head>

@@ -70,7 +70,7 @@
     <a href="{% url 'inventory:locationnew' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
   </div>
 </div>
-{% include 'inventory/location_list_atom.html' with location_list=location.get_descendants.all %}
+{% include 'inventory/location_list_atom.html' %}
 <p></p>
 {% include 'inventory/back.html' %}
 {% endblock %}

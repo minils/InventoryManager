@@ -16,7 +16,10 @@
     <div class="col-12 col-sm-12 col-lg-6">
       <div class="form-group">
         {{ form.uuid.label_tag }}
-        <input class="form-control" type="text" name="{{ form.uuid.html_name }}" id="{{ form.uuid.id_for_label }}" size="36" maxlength="36" style="font-family: monospace" value="{{ form.uuid.value }}" />
+        <input class="form-control{%if form.uuid.errors %} is-invalid{% endif %}" type="text" name="{{ form.uuid.html_name }}" id="{{ form.uuid.id_for_label }}" size="36" maxlength="36" style="font-family: monospace" value="{{ form.uuid.value }}" />
+        <div class="invalid-feedback">
+          {{ form.uuid.errors }}
+        </div>
       </div>
     </div>
     <div class="col">
@@ -26,10 +29,9 @@
       </div>
     </div>
   </div>
-  {{ form.uuid.errors }}
   <div class="form-group">
     <input type="submit" class="btn btn-primary" value="Save">
-    <input class="btn" type="button" value="Cancel" onclick="window.history.back()">
+    <input class="btn" type="button" value="Cancel" onclick="window.location = '{% url 'inventory:location' location.pk %}'">
     </div>
 </form>
 {% endblock %}

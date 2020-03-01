@@ -7,6 +7,7 @@ from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from uuid import UUID
 
@@ -75,22 +76,34 @@ class CategoriesView(generic.ListView):
         context['title'] = 'Categories'
         return context
 
-class LocationView(generic.DetailView):
-    model = Location
+class LocationView(generic.ListView):
+    model = Item
+    template_name = 'inventory/location_detail.html'
+    paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Location'
-        return context
+    def get(self, request, *args, **kwargs):
+        location = Location.objects.get(pk=kwargs['pk'])
+        self.object_list = Item.objects.filter(location__exact=location)
 
+        context = self.get_context_data()
+        context['location'] = location
+        context['title'] = _("Location")
+        return self.render_to_response(context)
 
-class CategoryView(generic.DetailView):
-    model = Category
+    
+class CategoryView(generic.ListView):
+    model = Item
+    template_name = 'inventory/category_detail.html'
+    paginate_by = 10
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Category'
-        return context
+    def get(self, request, *args, **kwargs):
+        category = Category.objects.get(pk=kwargs['pk'])
+        self.object_list = Item.objects.filter(category__exact=category)
+
+        context = self.get_context_data()
+        context['category'] = category
+        context['title'] = _("Category")
+        return self.render_to_response(context)
 
 
 class ItemView(generic.DetailView):

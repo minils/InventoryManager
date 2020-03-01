@@ -5,29 +5,31 @@
 <div class="row mb-4">
   <div class="col">
     <h2>{% trans "Latest Items" %}</h2>
-    <table class="table table-hover table-sm">
-      <thead>
+    <div class="table-responsive">
+      <table class="table table-hover table-sm">
+        <thead>
+          <tr>
+            <th><span class="material-icons">bar_chart</span></th>
+            <th><span class="material-icons">label</span>{% trans "Name" %}</th>
+            <th><span class="material-icons">archive</span>{% trans "Location" %}</th>
+            <th><span class="material-icons">category</span>{% trans "Category" %}</th>
+            <th class="d-none d-md-table-cell">
+              <span class="material-icons">create</span>
+              {% trans "Created" %}
+            </th>
+          </tr>
+        </thead>
+        {% for item in latest_items %}
         <tr>
-          <th><span class="material-icons">bar_chart</span></th>
-          <th><span class="material-icons">label</span>{% trans "Name" %}</th>
-          <th><span class="material-icons">archive</span>{% trans "Location" %}</th>
-          <th><span class="material-icons">category</span>{% trans "Category" %}</th>
-          <th class="d-none d-md-table-cell">
-            <span class="material-icons">create</span>
-            {% trans "Created" %}
-          </th>
+          <td>{{ item.amount }}</td>
+          <td><a href="{% url 'inventory:item' item.pk %}">{{ item.name }}</a></td>
+          <td><a href="{% url 'inventory:location' item.location.pk %}">{{ item.location }}</a></td>
+          <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
+          <td class="d-none d-md-table-cell">{{ item.creation_date|date:'d. M. H:i' }}</td>
         </tr>
-      </thead>
-      {% for item in latest_items %}
-      <tr>
-        <td>{{ item.amount }}</td>
-        <td><a href="{% url 'inventory:item' item.pk %}">{{ item.name }}</a></td>
-        <td><a href="{% url 'inventory:location' item.location.pk %}">{{ item.location }}</a></td>
-        <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
-        <td class="d-none d-md-table-cell">{{ item.creation_date|date:'d. M. H:i' }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 </div>
 <div class="row">

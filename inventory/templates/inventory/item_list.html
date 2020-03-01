@@ -1,29 +1,32 @@
 {% load i18n %}
 {% if list %}
-<table class="table table-striped">
-  <tr>
-    <th><span class="material-icons">bar_chart</span></th>
-    <th><span class="material-icons">label</span>{% trans "Name" %}</th>
-    <th class="d-none d-md-table-cell"><span class="material-icons">description</span>{% trans "Description" %}</th>
-    <th><span class="material-icons">archive</span>{% trans "Location" %}</th>
-    <th><span class="material-icons">category</span>{% trans "Category" %}</th>
-    <th class="d-none d-sm-table-cell"><span class="material-icons">create</span>{% trans "Created" %}</th>
-    <th><span class="material-icons">assignment</span>{% trans "Tools" %}</th>
-  </tr>
-  {% for item in list %}
-  <tr>
-    <td>{{ item.amount }}</td>
-    <td><a href="{% url 'inventory:item' item.pk %}">{{ item.name }}</a></td>
-    <td class="d-none d-md-table-cell">{{ item.description }}</td>
-    <td><a href="{% url 'inventory:location' item.location.pk %}">{{ item.location }}</a></td>
-    <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
-    <td class="d-none d-sm-table-cell">{{ item.creation_date|date:"d.m.y" }} {{ item.creation_date|time:"H:i" }}</td>
-    <td>
-      {% include 'inventory/item_actions.html' %}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tr>
+      <th><span class="material-icons">bar_chart</span></th>
+      <th><span class="material-icons">label</span>{% trans "Name" %}</th>
+      <th class="d-none d-md-table-cell"><span class="material-icons">description</span>{% trans "Description" %}</th>
+      <th><span class="material-icons">archive</span>{% trans "Location" %}</th>
+      <th><span class="material-icons">category</span>{% trans "Category" %}</th>
+      <th class="d-none d-sm-table-cell"><span class="material-icons">create</span>{% trans "Created" %}</th>
+      <th class="d-none d-sm-table-cell"><span class="material-icons">assignment</span>{% trans "Tools" %}</th>
+    </tr>
+    {% for item in list %}
+    <tr>
+      <td>{{ item.amount }}</td>
+      <td><a href="{% url 'inventory:item' item.pk %}">{{ item.name }}</a></td>
+      <td class="d-none d-md-table-cell">{{ item.description }}</td>
+      <td><a href="{% url 'inventory:location' item.location.pk %}">{{ item.location }}</a></td>
+      <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
+      <td class="d-none d-sm-table-cell">{{ item.creation_date|date:"d.m.y" }} {{ item.creation_date|time:"H:i" }}</td>
+      <td class="d-none d-sm-table-cell">
+        {% include 'inventory/item_actions.html' %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% include 'inventory/pagination.html' %}
 {% else %}
 <p>{% trans "Empty" %}</p>
 {% endif %}

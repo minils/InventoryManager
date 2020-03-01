@@ -62,7 +62,7 @@
     <a href="{% url 'inventory:locationnewitem' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
   </div>
 </div>
-{% include 'inventory/item_list.html' with list=location.item_set.all %}
+{% include 'inventory/item_list.html' with list=item_list %}
 <div class="row">
   <div class="col-auto">
     <h2>{% trans "Sublocations" %}</h2>

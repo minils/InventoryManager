@@ -1,8 +1,20 @@
+{% load i18n %}
 {% if location.state == 'd' %}
-<a href="{% url 'inventory:locationedit' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">edit</a>
-<a href="{% url 'inventory:locationdelete' location.pk %}" class="btn btn-sm btn-outline-danger material-icons">delete</a>
+<a href="{% url 'inventory:locationedit' location.pk %}" class="btn btn-sm btn-outline-primary material-icons"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Edit' %}">
+  edit
+</a>
+<a href="{% url 'inventory:locationtrash' location.pk %}" class="btn btn-sm btn-outline-danger material-icons"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Trash' %}">
+  delete
+</a>
 {% else %}
-<a href="{% url 'inventory:locationundelete' location.pk %}" class="btn btn-outline-secondary btn-sm">
+<a href="{% url 'inventory:locationuntrash' location.pk %}" class="btn btn-outline-secondary btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Restore' %}">
   <span class="material-icons">restore_from_trash</span>
+</a>
+<a href="{% url 'inventory:locationdelete' location.pk %}?next={{ next }}" class="btn btn-outline-danger btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete forever' %}">
+  <span class="material-icons">delete_forever</span>
 </a>
 {% endif %}

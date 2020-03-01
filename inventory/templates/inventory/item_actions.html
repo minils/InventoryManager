@@ -1,21 +1,32 @@
 {% load i18n %}
 
 {% if item.state == 'd' %}
-<a href="{% url 'inventory:itemlend' item.pk %}" class="btn btn-outline-warning btn-sm"
+{% if item.lent %}
+<a href="{% url 'inventory:itemreturn' item.pk %}?next={{ next }}" class="btn btn-outline-warning btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Return' %}">
+  <span class="material-icons">assignment_turned_in</span>
+</a>
+{% else %}
+<a href="{% url 'inventory:itemlend' item.pk %}?next={{ next }}" class="btn btn-outline-warning btn-sm"
    data-toggle="tooltip" data-placement="bottom" title="{% trans 'Lend' %}">
   <span class="material-icons">assignment_return</span>
 </a>
-<a href="{% url 'inventory:itemedit' item.pk %}" class="btn btn-outline-primary btn-sm"
+{% endif %}
+<a href="{% url 'inventory:itemedit' item.pk %}?next={{ next }}" class="btn btn-outline-primary btn-sm"
    data-toggle="tooltip" data-placement="bottom" title="{% trans 'Edit' %}">
   <span class="material-icons">edit</span>
 </a>
-<a href="{% url 'inventory:itemdelete' item.pk %}" class="btn btn-outline-danger btn-sm"
-   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete' %}">
+<a href="{% url 'inventory:itemtrash' item.pk %}?next={{ next }}" class="btn btn-outline-danger btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Trash' %}">
   <span class="material-icons">delete</span>
 </a>
 {% else %}
-<a href="{% url 'inventory:itemundelete' item.pk %}" class="btn btn-outline-secondary btn-sm"
+<a href="{% url 'inventory:itemuntrash' item.pk %}?next={{ next }}" class="btn btn-outline-secondary btn-sm"
    data-toggle="tooltip" data-placement="bottom" title="{% trans 'Restore' %}">
   <span class="material-icons">restore_from_trash</span>
+</a>
+<a href="{% url 'inventory:itemdelete' item.pk %}?next={{ next }}" class="btn btn-outline-danger btn-sm"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete forever' %}">
+  <span class="material-icons">delete_forever</span>
 </a>
 {% endif %}

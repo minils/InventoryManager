@@ -48,26 +48,37 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item{% if nav_item == 'Home' %} active{% endif %}">
+          <li class="nav-item{% if request.resolver_match.url_name == 'index' %} active{% endif %}">
             <a class="nav-link" href="{% url 'inventory:index' %}">{% trans "Home" %}<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item{% if nav_item == 'Locations' %} active{% endif %}">
-            <a class="nav-link" href="{% url 'inventory:locations' %}">{% trans "Locations" %}</a>
+          <li class="nav-item dropdown{% if 'location' in request.path and 'new' not in request.path %} active{% endif %}">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% trans "Locations" %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'inventory:locations' %}">{% trans "All Locations" %}</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'inventory:locationfind' %}">{% trans "Find location" %}</a>
+              <a class="dropdown-item" href="{% url 'inventory:locationfindfreeslot' %}">{% trans "Find free slot" %}</a>
+            </div>
           </li>
-          <li class="nav-item{% if nav_item == 'Categories' %} active{% endif %}">
+          <li class="nav-item{% if 'categor' in request.path and 'new' not in request.path %} active{% endif %}">
             <a class="nav-link" href="{% url 'inventory:categories' %}">{% trans "Categories" %}</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown{% if 'new' in request.path %} active{% endif %}">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% trans "New" %}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'inventory:locationnewitem' 1 %}">{% trans "New Item" %}</a>
-              <a class="dropdown-item" href="{% url 'inventory:locationnew' 1 %}">{% trans "New Location" %}</a>
-              <a class="dropdown-item" href="{% url 'inventory:locationnew' 1 %}">{% trans "New Category" %}</a>
+              <a class="dropdown-item{% if request.resolver_match.url_name == 'locationnewitem' %} active{% endif %}" href="{% url 'inventory:locationnewitem' 1 %}">{% trans "New Item" %}</a>
+              <a class="dropdown-item{% if request.resolver_match.url_name == 'locationnew' %} active{% endif %}" href="{% url 'inventory:locationnew' 1 %}">{% trans "New Location" %}</a>
+              <a class="dropdown-item{% if request.resolver_match.url_name == 'categorynew' %} active{% endif %}" href="{% url 'inventory:categorynew' 1 %}">{% trans "New Category" %}</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item{% if request.resolver_match.url_name == 'trash' %} active{% endif %}">
+            <a class="nav-link" href="{% url 'inventory:trash' %}">{% trans "Trash" %}</a>
+          </li>
+          <!--li class="nav-item dropdown{% if request.resolver_match.url_name == 'locationfind' or request.resolver_match.url_name == 'locationfindfreeslot' or request.resolver_match.url_name == 'trash' %} active{% endif %}">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% trans "More" %}
             </a>
@@ -77,7 +88,7 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'inventory:trash' %}">{% trans "Trash" %}</a>
             </div>
-          </li>
+          </li-->
         </ul>
         <form class="form-inline" action="{% url 'inventory:search' %}" method="get">
           {#% csrf_token %#}

@@ -20,7 +20,7 @@
       <td><a href="{% url 'inventory:category' item.category.pk %}">{{ item.category }}</a></td>
       <td class="d-none d-sm-table-cell">{{ item.creation_date|date:"d.m.y" }} {{ item.creation_date|time:"H:i" }}</td>
       <td class="d-none d-sm-table-cell">
-        {% include 'inventory/item_actions.html' %}
+        {% include 'inventory/item_actions.html' with next=next %}
       </td>
     </tr>
     {% endfor %}

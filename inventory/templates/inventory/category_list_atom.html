@@ -1,4 +1,5 @@
 {% load mptt_tags %}
+{% load i18n %}
 {% if category_list %}
 <ul class="list-group">
   {% recursetree category_list %}
@@ -13,5 +14,5 @@
   {% endrecursetree %}
 </ul>
 {% else %}
-<p>None</p>
+<p>{% trans 'None' %}</p>
 {% endif %}

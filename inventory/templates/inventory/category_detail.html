@@ -24,7 +24,7 @@
   </tr>
 </table>
 <h2>{% trans "Items" %}</h2>
-{% include 'inventory/item_list.html' with list=item_list %}
+{% include 'inventory/item_list.html' with list=item_list next='category' %}
 <div class="row">
   <div class="col-auto">
     <h2>{% trans "Subcategories" %}</h2>
@@ -33,7 +33,7 @@
     <a href="{% url 'inventory:categorynew' category.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
   </div>
 </div>
-{% include 'inventory/category_list_atom.html' with category_list=category.get_descendants.all %}
+{% include 'inventory/category_list_atom.html' with category_list=subcategories %}
 <p></p>
 {% include 'inventory/back.html' %}
 {% endblock %}

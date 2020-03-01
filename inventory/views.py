@@ -16,6 +16,8 @@ from .forms import LocationEditForm, ItemEditForm, ItemLendForm, CategoryEditFor
 
 logger = logging.getLogger(__name__)
 
+types = ['item', 'category', 'location']
+
 def index(request):
     latest_items = Item.objects.order_by('-creation_date')[:5]
     categories = Category.objects.order_by('-creation_date')[:5]
@@ -35,10 +37,10 @@ class SearchItem(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['search_term'] = self.request.GET['q']
-        if self.request.GET['type'] in search_types:
+        if self.request.GET['type'] in types:
             context['search_type'] = self.request.GET['type']
         else:
-            context['search_type'] = search_types[0]
+            context['search_type'] = types[0]
         if len(context['search_term']) < 3:
             context['error_message'] = _("Search term must contain at least 3 letters.")
         context['title'] = _("Search")
@@ -105,6 +107,7 @@ class CategoryView(generic.ListView):
 
         context = self.get_context_data()
         context['category'] = category
+        context['subcategories'] = category.get_descendants().filter(state__exact='d')
         context['title'] = _("Category")
         return self.render_to_response(context)
 
@@ -199,16 +202,24 @@ def item_edit(request, pk):
 
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
+    if item.state != 't':
+        raise Http404("Item must be trashed first.")
+    item.delete()
+
+    return HttpResponseRedirect(reverse('inventory:trash'))
+
+def item_trash(request, pk):
+    item = get_object_or_404(Item, pk=pk)
     location = item.location
     item.state = 't'
     item.save()
 
     return HttpResponseRedirect(reverse('inventory:location', args=(location.pk,)))
 
-def item_undelete(request, pk):
+def item_untrash(request, pk):
     item = get_object_or_404(Item, pk=pk)
     if item.state != 't':
-        raise Http404(_("Cannot undelete non-trashed item"))
+        raise Http404(_("Cannot untrash non-trashed item"))
     item.state = 'd'
     item.save()
 
@@ -237,10 +248,19 @@ def item_lend(request, pk):
         'instance': instance,
     })
 
+def redirect_next(request, item, message):
+    if 'next' in request:
+        raise Http404(_("Missing argument"))
+    if request.GET['next'] not in types:
+        raise Http404(_("Wrong 'next' argument"))
+    if 'next' == 'item':
+        return HttpResponseRedirect(reverse('inventory:item', args=(item.pk,)))
+
 def item_return(request, pk):
     instance = get_object_or_404(Item, pk=pk)
     if instance.lent == False:
-        return HttpResponseRedirect(reverse('inventory:item', args=(instance.pk,)))
+        return HttpResponseRedirect(reverse('inventory:item', args=(item.pk,)))
+        #redirect_next(request, pk, "")
     else:
         instance.lent = False
         instance.lent_to = ""
@@ -249,39 +269,62 @@ def item_return(request, pk):
         return HttpResponseRedirect(reverse('inventory:item', args=(instance.pk,)))
 
 def location_delete(request, pk):
+    location = get_object_or_404(Location, pk=pk)
+    if location.state != 't':
+        raise Http404("Location must be trashed first.")
+    location.delete()
+    return HttpResponseRedirect(reverse('inventory:trash'))
+    
+def location_trash(request, pk):
     if pk == 1:
-        raise Http404(_("Cannot delete 'Universe'"))
+        raise Http404(_("Cannot trash 'Universe'"))
     location = get_object_or_404(Location, pk=pk)
     if location.children.count() != 0:
-        error_message = _("Cannot be deleted because sublocations exist.")
+        error_message = _("Cannot trash location with sublocations.")
         return render(request, 'inventory/location_detail.html', {
-            'title': _("Delete item"),
+            'title': _("Trash location"),
             'error_message': error_message,
             'location': location,
         })
+    elif location.item_set.count() != 0:
+        error_message = _("Cannot trash non-empty location.")
+        return render(request, 'inventory/location_detail.html', {
+            'title': _("Trash location"),
+            'error_message': error_message,
+            'location': location,
+        })
+
     parent = location.parent
     location.state = 't'
     location.save()
 
     return HttpResponseRedirect(reverse('inventory:location', args=(parent.pk,)))
 
-def location_undelete(request, pk):
+def location_untrash(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if location.state != 't':
-        raise Http404(_("Cannot undelete non-trashed location"))
+        raise Http404(_("Cannot untrash non-trashed location"))
     location.state = 'd'
     location.save()
 
     return HttpResponseRedirect(reverse('inventory:trash', args=()))
 
+
 def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if category.state != 't':
+        raise Http404("Category must be trashed first.")
+    category.delete()
+    return HttpResponseRedirect(reverse('inventory:trash'))
+
+def category_trash(request, pk):
     if pk == 1:
-        raise Http404(_("Cannot delete 'Everything'"))
+        raise Http404(_("Cannot trash 'Everything'"))
     category = get_object_or_404(Category, pk=pk)
     if category.children.count() != 0:
-        error_message = _("Cannot be deleted because subcategories exist.")
+        error_message = _("Cannot be trashd because subcategories exist.")
         return render(request, 'inventory/category_detail.html', {
-            'title': _("Delete category"),
+            'title': _("Trash category"),
             'error_message': error_message,
             'category': category,
         })
@@ -291,10 +334,10 @@ def category_delete(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:category', args=(parent.pk,)))
 
-def category_undelete(request, pk):
+def category_untrash(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if category.state != 't':
-        raise Http404(_("Cannot undelete non-trashed category"))
+        raise Http404(_("Cannot untrash non-trashed category"))
     category.state = 'd'
     category.save()
 
@@ -373,16 +416,15 @@ class AccountsProfile(generic.DetailView):
     def get_object(self):
         return self.request.user
 
-search_types = ['item', 'category', 'location']
 class TrashView(generic.ListView):
     paginate_by = 25
     template_name = 'inventory/trash.html'
 
     def get(self, request, *args, **kwargs):
-        if 'type' in self.request.GET and self.request.GET['type'] in search_types:
+        if 'type' in self.request.GET and self.request.GET['type'] in types:
             search_type = self.request.GET['type']
         else:
-            search_type = search_types[0]
+            search_type = types[0]
 
         if search_type == 'item':
             self.object_list = Item.objects.filter(state__exact='t')

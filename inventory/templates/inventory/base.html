@@ -112,20 +112,21 @@
         </ul>
         <form class="form-inline" action="{% url 'inventory:search' %}" method="get">
           {#% csrf_token %#}
-          <input class="form-control mr-sm-2" type="search" placeholder="{% trans "Search" %}" aria-label="Search" name="q" value="{{ search_term|default:"" }}">
-          <input type="hidden" name="type" value="item">
-          <button class="btn btn-primary my-2 my-sm-0 material-icons mr-sm-2" type="submit">search</button>
+          <div class="form-group">
+            <input class="form-control mr-sm-2 my-2 my-md-0" type="search" placeholder="{% trans "Search" %}" aria-label="Search" name="q" value="{{ search_term|default:"" }}">
+            <input type="hidden" name="type" value="item">
+            <button class="btn btn-primary my-2 my-sm-0 material-icons mr-sm-2" type="submit">search</button>
+          </div>
         </form>
         {% if request.user.is_authenticated %}
         <span class="text-white-50 mr-sm-2">
-          {% trans 'Logged in as' %} <a class="text-white-50 font-weight-bold" href="{% url 'inventory:profile' %}">{{ request.user.username }}</a>
+          {% trans 'Hi, ' %} <a class="text-white-50 font-weight-bold" href="{% url 'inventory:profile' %}">{{ request.user.first_name }}</a>
         </span>
-        <a href="{% url 'inventory:logout' %}?next=/" class="btn btn-primary">
+        <a href="{% url 'inventory:logout' %}?next=/" class="btn btn-primary my-2 my-md-0 text-nowrap">
           <span class="material-icons">lock</span>Logout
         </a>
-        </button>
         {% else %}
-        <a href="{% url 'inventory:login' %}" class="btn btn-primary">
+        <a href="{% url 'inventory:login' %}" class="btn btn-primary my-2 my-md-0">
           <span class="material-icons">lock_open</span>Login
         </a>
         {% endif %}

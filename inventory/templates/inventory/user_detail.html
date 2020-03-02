@@ -1,19 +1,23 @@
 {% extends 'inventory/base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>Account Details</h1>
+<h1>{% trans 'Account Detail' %}</h1>
 <table class="table">
   <tr>
-    <th>Username</th>
+    <th>{% trans 'Username' %}</th>
     <td>{{ user.username }}</td>
   </tr>
   <tr>
-    <th>E-Mai</th>
+    <th>{% trans 'Name' %}</th>
+    <td>{{ user.first_name}} {{ user.last_name }}</td>
+  <tr>
+    <th>{% trans 'E-Mail' %}</th>
     <td>{{ user.email }}</td>
   </tr>
   <tr>
-    <th>Password</th>
-    <td>******** <a href="{% url 'inventory:password_change' %}">Change</a></td>
+    <th>{% trans 'Password' %}</th>
+    <td>******** <a href="{% url 'inventory:password_change' %}">{% trans 'Change' %}</a></td>
   </tr>
 </table>
 {% endblock %}

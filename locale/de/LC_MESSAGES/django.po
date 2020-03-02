@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-01 23:29+0000\n"
-"PO-Revision-Date: 2020-03-02 00:30+0100\n"
+"POT-Creation-Date: 2020-03-02 13:53+0000\n"
+"PO-Revision-Date: 2020-03-02 14:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: inventory/forms.py:12 inventory/models.py:14 inventory/models.py:28
-#: inventory/models.py:46 inventory/templates/inventory/index.html:13
+#: inventory/forms.py:12 inventory/models.py:14 inventory/models.py:33
+#: inventory/models.py:54 inventory/templates/inventory/index.html:13
 #: inventory/templates/inventory/index.html:41
 #: inventory/templates/inventory/index.html:59
 #: inventory/templates/inventory/item_list.html:7
@@ -27,31 +27,31 @@ msgstr ""
 msgid "Name"
 msgstr "Name"
 
-#: inventory/forms.py:13 inventory/models.py:20 inventory/models.py:32
-#: inventory/models.py:51 inventory/templates/inventory/category_detail.html:22
+#: inventory/forms.py:13 inventory/models.py:20 inventory/models.py:37
+#: inventory/models.py:59 inventory/templates/inventory/category_detail.html:22
 #: inventory/templates/inventory/item_list.html:8
 #: inventory/templates/inventory/location_detail.html:23
 #: inventory/templates/inventory/location_list_atom.html:8
 msgid "Description"
 msgstr "Beschreibung"
 
-#: inventory/forms.py:14 inventory/models.py:50
+#: inventory/forms.py:14 inventory/models.py:58
 msgid "Amount"
 msgstr "Menge"
 
-#: inventory/forms.py:15 inventory/models.py:49
+#: inventory/forms.py:15 inventory/models.py:57
 #: inventory/templates/inventory/index.html:14
-#: inventory/templates/inventory/item_list.html:9 inventory/views.py:99
+#: inventory/templates/inventory/item_list.html:9 inventory/views.py:108
 msgid "Location"
 msgstr "Ort"
 
-#: inventory/forms.py:16 inventory/models.py:52
+#: inventory/forms.py:16 inventory/models.py:60
 #: inventory/templates/inventory/index.html:15
-#: inventory/templates/inventory/item_list.html:10 inventory/views.py:115
+#: inventory/templates/inventory/item_list.html:10 inventory/views.py:125
 msgid "Category"
 msgstr "Kategorie"
 
-#: inventory/forms.py:17 inventory/models.py:53
+#: inventory/forms.py:17 inventory/models.py:61
 #: inventory/templates/inventory/location_detail.html:49
 msgid "Barcode"
 msgstr "Barcode"
@@ -77,38 +77,38 @@ msgstr "Freier Platz"
 msgid "UUID"
 msgstr "UUID"
 
-#: inventory/models.py:21 inventory/models.py:33 inventory/models.py:57
+#: inventory/models.py:21 inventory/models.py:38 inventory/models.py:65
 msgid "State"
 msgstr "Status"
 
-#: inventory/models.py:29 inventory/models.py:47
+#: inventory/models.py:34 inventory/models.py:55
 msgid "Creation Date"
 msgstr "Erstellt"
 
-#: inventory/models.py:30 inventory/models.py:48
+#: inventory/models.py:35 inventory/models.py:56
 msgid "Change Date"
 msgstr "Geändert"
 
-#: inventory/models.py:31
+#: inventory/models.py:36
 msgid "Supercategory"
 msgstr "Überkategorie"
 
-#: inventory/models.py:42 inventory/templates/inventory/base.html:97
+#: inventory/models.py:47 inventory/templates/inventory/base.html:97
 #: inventory/templates/inventory/category_list.html:5
 #: inventory/templates/inventory/search.html:28
-#: inventory/templates/inventory/trash.html:22 inventory/views.py:84
+#: inventory/templates/inventory/trash.html:22 inventory/views.py:92
 msgid "Categories"
 msgstr "Kategorien"
 
-#: inventory/models.py:54
+#: inventory/models.py:62
 msgid "lent"
 msgstr "verliehen"
 
-#: inventory/models.py:55
+#: inventory/models.py:63
 msgid "Lent to"
 msgstr "Verliehen an"
 
-#: inventory/models.py:56
+#: inventory/models.py:64
 msgid "Lent Date"
 msgstr "Verliehen am"
 
@@ -118,18 +118,18 @@ msgstr "Zurück"
 
 #: inventory/templates/inventory/base.html:10
 #: inventory/templates/inventory/base.html:75
-#: inventory/templates/inventory/base.html:154
+#: inventory/templates/inventory/base.html:146
 msgid "Inventory Manager"
 msgstr "Inventar Verwaltung"
 
-#: inventory/templates/inventory/base.html:83 inventory/views.py:30
+#: inventory/templates/inventory/base.html:83 inventory/views.py:35
 msgid "Home"
 msgstr "Startseite"
 
 #: inventory/templates/inventory/base.html:87
 #: inventory/templates/inventory/location_list.html:5
 #: inventory/templates/inventory/search.html:24
-#: inventory/templates/inventory/trash.html:18 inventory/views.py:71
+#: inventory/templates/inventory/trash.html:18 inventory/views.py:78
 msgid "Locations"
 msgstr "Orte"
 
@@ -138,13 +138,11 @@ msgid "All Locations"
 msgstr "Alle Orte"
 
 #: inventory/templates/inventory/base.html:92
-#: inventory/templates/inventory/base.html:117
-#: inventory/templates/inventory/location_find.html:5 inventory/views.py:165
+#: inventory/templates/inventory/location_find.html:5 inventory/views.py:180
 msgid "Find location"
 msgstr "Ort finden"
 
 #: inventory/templates/inventory/base.html:93
-#: inventory/templates/inventory/base.html:118
 msgid "Find free slot"
 msgstr "Freien Ort finden"
 
@@ -168,25 +166,24 @@ msgid "New Category"
 msgstr "Neue Kategorie"
 
 #: inventory/templates/inventory/base.html:110
-#: inventory/templates/inventory/base.html:120
 #: inventory/templates/inventory/category_actions.html:8
 #: inventory/templates/inventory/item_actions.html:20
 #: inventory/templates/inventory/location_actions.html:8
-#: inventory/templates/inventory/trash.html:5 inventory/views.py:442
+#: inventory/templates/inventory/trash.html:5 inventory/views.py:478
 msgid "Trash"
 msgstr "Papierkorb"
 
-#: inventory/templates/inventory/base.html:114
-msgid "More"
-msgstr "Mehr"
-
-#: inventory/templates/inventory/base.html:126
+#: inventory/templates/inventory/base.html:115
 #: inventory/templates/inventory/search.html:5
-#: inventory/templates/inventory/search.html:35 inventory/views.py:46
+#: inventory/templates/inventory/search.html:35 inventory/views.py:52
 msgid "Search"
 msgstr "Suche"
 
-#: inventory/templates/inventory/base.html:154
+#: inventory/templates/inventory/base.html:121
+msgid "Logged in as"
+msgstr "Eingeloggt als"
+
+#: inventory/templates/inventory/base.html:146
 msgid "Account"
 msgstr "Konto"
 
@@ -285,6 +282,22 @@ msgstr "Werkzeuge"
 msgid "Empty"
 msgstr "Leer"
 
+#: inventory/templates/inventory/landing.html:11
+msgid "Inventory Manager - Sign In"
+msgstr "Inventar Verwaltung - Anmeldung"
+
+#: inventory/templates/inventory/landing.html:26
+msgid "Please sign in"
+msgstr "Bitte anmelden"
+
+#: inventory/templates/inventory/landing.html:32
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: inventory/templates/inventory/landing.html:33
+msgid "Inventory Manager 2020"
+msgstr "Inventar Verwaltung 2020"
+
 #: inventory/templates/inventory/location_detail.html:43
 msgid "Add"
 msgstr "Hinzufügen"
@@ -328,77 +341,80 @@ msgstr "Filter"
 msgid "Results"
 msgstr "Ergebnisse"
 
-#: inventory/views.py:45
+#: inventory/views.py:51
 msgid "Search term must contain at least 3 letters."
 msgstr "Die Suchanfrage muss aus mindestens 3 Zeichen bestehen."
 
-#: inventory/views.py:124
+#: inventory/views.py:135
 msgid "Item"
 msgstr "Artikel"
 
-#: inventory/views.py:139
+#: inventory/views.py:151
 msgid "Edit Location"
 msgstr "Ort bearbeiten"
 
-#: inventory/views.py:184
+#: inventory/views.py:202
 msgid "New item"
 msgstr "Neuer Artikel"
 
-#: inventory/views.py:202
+#: inventory/views.py:222
 msgid "Edit item"
 msgstr "Artikel bearbeiten"
 
-#: inventory/views.py:226
+#: inventory/views.py:249
 msgid "Cannot untrash non-trashed item"
 msgstr "Nicht gelöschte Artikel können nicht wiederhergestellt werden"
 
-#: inventory/views.py:250
+#: inventory/views.py:273
 msgid "Lend item"
 msgstr "Artikel ausleihen"
 
-#: inventory/views.py:257
+#: inventory/views.py:280
 msgid "Missing argument"
 msgstr "Fehlendes Argument"
 
-#: inventory/views.py:259
+#: inventory/views.py:282
 msgid "Wrong 'next' argument"
 msgstr "Falsches 'next' Argument"
 
-#: inventory/views.py:284
+#: inventory/views.py:310
 msgid "Cannot trash 'Universe'"
 msgstr "'Universum' kann nicht gelöscht werden."
 
-#: inventory/views.py:287
+#: inventory/views.py:313
 msgid "Cannot trash location with sublocations."
 msgstr "Orte mit Unterorten können nicht gelöscht werden."
 
-#: inventory/views.py:289 inventory/views.py:296
+#: inventory/views.py:315 inventory/views.py:322
 msgid "Trash location"
 msgstr "Ort löschen"
 
-#: inventory/views.py:294
+#: inventory/views.py:320
 msgid "Cannot trash non-empty location."
 msgstr "Nicht leere Orte können nicht gelöscht werden."
 
-#: inventory/views.py:310
+#: inventory/views.py:337
 msgid "Cannot untrash non-trashed location"
 msgstr "Nicht gelöschte Ort können nicht wiederhergestellt werden"
 
-#: inventory/views.py:326
+#: inventory/views.py:354
 msgid "Cannot trash 'Everything'"
 msgstr "'Everything' kann nicht gelöscht werden"
 
-#: inventory/views.py:329
+#: inventory/views.py:357
 msgid "Cannot be trashd because subcategories exist."
 msgstr "Kann nicht gelöscht werden, da noch Unterkategorien existieren."
 
-#: inventory/views.py:331
+#: inventory/views.py:359
 msgid "Trash category"
 msgstr "Kategorie löschen"
 
-#: inventory/views.py:344
+#: inventory/views.py:373
 msgid "Cannot untrash non-trashed category"
 msgstr "Nicht gelöschte Kategorien können nicht wiederhergestellt werden"
+
+#~ msgid "More"
+#~ msgstr "Mehr"
 
 #~ msgid "Delete"
 #~ msgstr "Löschen"

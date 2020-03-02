@@ -23,6 +23,11 @@ class Location(MPTTModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        permissions = [
+            ('trash_location', 'Can trash location')
+        ]
+
 
 class Category(MPTTModel):
     name = models.CharField(max_length=200, verbose_name=_("Name"))
@@ -40,6 +45,9 @@ class Category(MPTTModel):
 
     class Meta:
         verbose_name_plural = _("Categories")
+        permissions = [
+            ('trash_category', 'Can trash category')
+        ]
 
 
 class Item(models.Model):
@@ -58,4 +66,10 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        permissions = [
+            ('trash_item', 'Can trash item'),
+            ('leden_item', 'Can lend item'),
+        ]
     

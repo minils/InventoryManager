@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 from uuid import UUID
 
@@ -18,6 +20,9 @@ logger = logging.getLogger(__name__)
 
 types = ['item', 'category', 'location']
 
+@permission_required('inventory.view_item')
+@permission_required('inventory.view_location')
+@permission_required('inventory.view_category')
 def index(request):
     latest_items = Item.objects.order_by('-creation_date')[:5]
     categories = Category.objects.order_by('-creation_date')[:5]
@@ -30,7 +35,8 @@ def index(request):
         'nav_item': _("Home"),
     })
 
-class SearchItem(generic.ListView):
+class SearchItem(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_item', 'inventory.view_location','inventory.view_category')
     paginate_by = 25
     template_name = 'inventory/search.html'
 
@@ -62,7 +68,8 @@ class SearchItem(generic.ListView):
                 results = []
             return results
 
-class LocationsView(generic.ListView):
+class LocationsView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_location')
     model = Location
     paginate_by = 25
 
@@ -75,7 +82,8 @@ class LocationsView(generic.ListView):
         return Location.objects.filter(state__exact='d')
     
 
-class CategoriesView(generic.ListView):
+class CategoriesView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_category')
     model = Category
     paginate_by = 25
 
@@ -84,7 +92,8 @@ class CategoriesView(generic.ListView):
         context['title'] = _("Categories")
         return context
 
-class LocationView(generic.ListView):
+class LocationView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_item', 'inventory.view_location','inventory.view_category')
     model = Item
     template_name = 'inventory/location_detail.html'
     paginate_by = 10
@@ -100,7 +109,8 @@ class LocationView(generic.ListView):
         return self.render_to_response(context)
 
     
-class CategoryView(generic.ListView):
+class CategoryView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_item', 'inventory.view_location', 'inventory.view_category')
     model = Item
     template_name = 'inventory/category_detail.html'
     paginate_by = 10
@@ -116,7 +126,8 @@ class CategoryView(generic.ListView):
         return self.render_to_response(context)
 
 
-class ItemView(generic.DetailView):
+class ItemView(PermissionRequiredMixin, generic.DetailView):
+    permission_required = ('inventory.view_item')
     model = Item
 
     def get_context_data(self, **kwargs):
@@ -124,6 +135,7 @@ class ItemView(generic.DetailView):
         context['title'] = _("Item")
         return context
 
+@permission_required('inventory.edit_location')
 def location_edit_uuid(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if request.method == 'POST':
@@ -141,6 +153,7 @@ def location_edit_uuid(request, pk):
         'location': location,
     })
 
+@permission_required('inventory.view_location')
 def location_find(request):
     if 'uuid' in request.GET:
         uuid = request.GET['uuid']
@@ -150,7 +163,8 @@ def location_find(request):
     })
 
 
-class LocationFindFreeSlot(generic.ListView):
+class LocationFindFreeSlot(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_item', 'inventory.view_location', 'inventory.view_category')
     model = Location
     paginate_by = 25
     template_name = 'inventory/location_findfreeslot.html'
@@ -159,6 +173,7 @@ class LocationFindFreeSlot(generic.ListView):
         locations = Location.objects.filter(free_space__exact=True)
         return locations
 
+@permission_required('inventory.view_location')
 def location_find_uuid(request, id):
     location = get_object_or_404(Location, uuid=id)
     return render(request, 'inventory/location_detail.html', {
@@ -166,6 +181,9 @@ def location_find_uuid(request, id):
         'location': location,
     })
 
+@permission_required('inventory.view_location')
+@permission_required('inventory.view_category')
+@permission_required('inventory.add_item')
 def item_new(request, pk):
     location = get_object_or_404(Location, pk=pk)
     category = Category.objects.get(pk=1)
@@ -186,6 +204,8 @@ def item_new(request, pk):
         'location': location,
     })
 
+@permission_required('inventory.view_item')
+@permission_required('inventory.view_item')
 def item_edit(request, pk):
     instance = get_object_or_404(Item, pk=pk)
     if request.method == 'POST':
@@ -204,6 +224,7 @@ def item_edit(request, pk):
         'instance': instance,
     })
 
+@permission_required('inventory.delete_item')
 def item_delete(request, pk):
     item = get_object_or_404(Item, pk=pk)
     if item.state != 't':
@@ -212,6 +233,7 @@ def item_delete(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:trash'))
 
+@permission_required('inventory.trash_item')
 def item_trash(request, pk):
     item = get_object_or_404(Item, pk=pk)
     location = item.location
@@ -220,6 +242,7 @@ def item_trash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:location', args=(location.pk,)))
 
+@permission_required('inventory.trash_item')
 def item_untrash(request, pk):
     item = get_object_or_404(Item, pk=pk)
     if item.state != 't':
@@ -229,7 +252,7 @@ def item_untrash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:trash', args=()))
     
-
+@permission_required('inventory.lend_item')
 def item_lend(request, pk):
     instance = get_object_or_404(Item, pk=pk)
 
@@ -260,6 +283,7 @@ def redirect_next(request, item, message):
     if 'next' == 'item':
         return HttpResponseRedirect(reverse('inventory:item', args=(item.pk,)))
 
+@permission_required('inventory.lend_item')
 def item_return(request, pk):
     instance = get_object_or_404(Item, pk=pk)
     if instance.lent == False:
@@ -272,13 +296,15 @@ def item_return(request, pk):
         instance.save()
         return HttpResponseRedirect(reverse('inventory:item', args=(instance.pk,)))
 
+@permission_required('inventory.delete_location')
 def location_delete(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if location.state != 't':
         raise Http404("Location must be trashed first.")
     location.delete()
     return HttpResponseRedirect(reverse('inventory:trash'))
-    
+
+@permission_required('inventory.trash_location')
 def location_trash(request, pk):
     if pk == 1:
         raise Http404(_("Cannot trash 'Universe'"))
@@ -304,6 +330,7 @@ def location_trash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:location', args=(parent.pk,)))
 
+@permission_required('inventory.trash_location')
 def location_untrash(request, pk):
     location = get_object_or_404(Location, pk=pk)
     if location.state != 't':
@@ -313,7 +340,7 @@ def location_untrash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:trash', args=()))
 
-
+@permission_required('inventory.delete_category')
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if category.state != 't':
@@ -321,6 +348,7 @@ def category_delete(request, pk):
     category.delete()
     return HttpResponseRedirect(reverse('inventory:trash'))
 
+@permission_required('inventory.trash_category')
 def category_trash(request, pk):
     if pk == 1:
         raise Http404(_("Cannot trash 'Everything'"))
@@ -338,6 +366,7 @@ def category_trash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:category', args=(parent.pk,)))
 
+@permission_required('inventory.trash_category')
 def category_untrash(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if category.state != 't':
@@ -347,6 +376,7 @@ def category_untrash(request, pk):
 
     return HttpResponseRedirect(reverse('inventory:trash', args=()))
 
+@permission_required('inventory.edit_category')
 def category_edit(request, pk):
     instance = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -363,6 +393,7 @@ def category_edit(request, pk):
         'instance': instance
     })
 
+@permission_required('inventory.add_category')
 def category_new(request, pk):
     parent = get_object_or_404(Category, pk=pk)
     instance = Category(parent=parent)
@@ -380,6 +411,7 @@ def category_new(request, pk):
         'instance': instance,
     })
 
+@permission_required('inventory.add_location')
 def location_new(request, pk):
     parent = get_object_or_404(Location, pk=pk)
     instance = Location(parent=parent)
@@ -397,6 +429,7 @@ def location_new(request, pk):
         'instance': instance,
     })
 
+@permission_required('inventory.edit_location')
 def location_edit(request, pk):
     instance = get_object_or_404(Location, pk=pk)
     if request.method == 'POST':
@@ -413,14 +446,17 @@ def location_edit(request, pk):
         'instance': instance
     })
 
-class AccountsProfile(generic.DetailView):
+
+class AccountsProfile(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = 'inventory/user_detail.html'
 
     def get_object(self):
         return self.request.user
 
-class TrashView(generic.ListView):
+
+class TrashView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('inventory.view_item', 'inventory.view_location', 'inventory.view_category')
     paginate_by = 25
     template_name = 'inventory/trash.html'
 

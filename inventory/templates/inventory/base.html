@@ -109,31 +109,23 @@
           <li class="nav-item{% if request.resolver_match.url_name == 'trash' %} active{% endif %}">
             <a class="nav-link" href="{% url 'inventory:trash' %}">{% trans "Trash" %}</a>
           </li>
-          <!--li class="nav-item dropdown{% if request.resolver_match.url_name == 'locationfind' or request.resolver_match.url_name == 'locationfindfreeslot' or request.resolver_match.url_name == 'trash' %} active{% endif %}">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {% trans "More" %}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'inventory:locationfind' %}">{% trans "Find location" %}</a>
-              <a class="dropdown-item" href="{% url 'inventory:locationfindfreeslot' %}">{% trans "Find free slot" %}</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'inventory:trash' %}">{% trans "Trash" %}</a>
-            </div>
-          </li-->
         </ul>
         <form class="form-inline" action="{% url 'inventory:search' %}" method="get">
           {#% csrf_token %#}
           <input class="form-control mr-sm-2" type="search" placeholder="{% trans "Search" %}" aria-label="Search" name="q" value="{{ search_term|default:"" }}">
           <input type="hidden" name="type" value="item">
-          <button class="btn btn-primary my-2 my-sm-0 material-icons" type="submit">search</button>
+          <button class="btn btn-primary my-2 my-sm-0 material-icons mr-sm-2" type="submit">search</button>
         </form>
         {% if request.user.is_authenticated %}
-        <a href="{% url 'inventory:logout' %}?next=/" class="btn btn-primary ml-2">
+        <span class="text-white-50 mr-sm-2">
+          {% trans 'Logged in as' %} <a class="text-white-50 font-weight-bold" href="{% url 'inventory:profile' %}">{{ request.user.username }}</a>
+        </span>
+        <a href="{% url 'inventory:logout' %}?next=/" class="btn btn-primary">
           <span class="material-icons">lock</span>Logout
         </a>
         </button>
         {% else %}
-        <a href="{% url 'inventory:login' %}" class="btn btn-primary ml-2">
+        <a href="{% url 'inventory:login' %}" class="btn btn-primary">
           <span class="material-icons">lock_open</span>Login
         </a>
         {% endif %}

@@ -33,8 +33,8 @@ urlpatterns = [
     path('item/<int:pk>/lend/', views.item_lend, name='itemlend'),
     path('item/<int:pk>/returno/)', views.item_return, name='itemreturn'),
     path('search/', views.SearchItem.as_view(), name='search'),
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='inventory/landing.html'), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/profile', views.AccountsProfile.as_view(), name='profile'),
-    #path('accounts/login/', auth_views.LoginView.as_view(template_name='inventory/login.html'), name='login'),
+    path('accounts/profile/', views.AccountsProfile.as_view(), name='profile'),
     path('trash/', views.TrashView.as_view(), name='trash'),
 ]

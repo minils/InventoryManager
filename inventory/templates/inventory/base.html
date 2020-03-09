@@ -144,7 +144,7 @@
       <hr>
     </div>
     <footer class="container">
-      <p>{% trans "Inventory Manager" %} v1.0{% if request.user.is_authenticated %} - <a href="{% url 'inventory:profile' %}">{% trans "Account" %}</a>{% endif %}</p>
+      <p>{% trans "Inventory Manager" %} v1.0{% if request.user.is_superuser %} - <a href="{% url 'admin:index' %}">{% trans "Admin" %}</a>{% endif %}</p>
     </footer>
   </body>
 </html>

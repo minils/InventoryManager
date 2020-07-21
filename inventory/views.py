@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 
 from uuid import UUID
 
-from .models import Item, Location, Category
+from .models import Item, Location, Category, LocationPrintList
 from .forms import LocationEditForm, ItemEditForm, ItemLendForm, CategoryEditForm, LocationUuidEditForm
 
 logger = logging.getLogger(__name__)
@@ -100,7 +100,7 @@ class LocationView(PermissionRequiredMixin, generic.ListView):
 
     def get(self, request, *args, **kwargs):
         location = Location.objects.get(pk=kwargs['pk'])
-        self.object_list = Item.objects.filter(location__exact=location, state__exact='d')
+        self.object_list = Item.objects.filter(location__exact=location, state__exact='d').order_by('name')
 
         context = self.get_context_data()
         context['location'] = location
@@ -445,6 +445,46 @@ def location_edit(request, pk):
         'form': form,
         'instance': instance
     })
+
+
+@permission_required('inventory.view_location')
+def print_list(request):
+    try:
+        print_list = LocationPrintList.objects.get(user=request.user)
+    except:
+        print_list = LocationPrintList.objects.create(user=request.user) 
+    return render(request, 'inventory/print_list.html', {
+        'list': print_list.locations.all().order_by('name')
+    })
+
+@permission_required('inventory.view_location')
+def print_list_clear(request):
+    try:
+        print_list = LocationPrintList.objects.get(user=request.user)
+        print_list.locations.clear()
+        return HttpResponseRedirect(reverse('inventory:print_list'))
+    except:
+        return HttpResponseRedirect(reverse('inventory:print_list'))
+
+@permission_required('inventory.view_location')
+def print_list_add(request, pk):
+    try:
+        print_list = LocationPrintList.for_user(user=request.user)
+        l = get_object_or_404(Location, pk=pk)
+        print_list.add(l)
+        return HttpResponseRedirect(reverse('inventory:print_list'))
+    except:
+        return HttpResponseRedirect(reverse('inventory:print_list'))
+    
+@permission_required('inventory.view_location')
+def print_list_remove(request, pk):
+    try:
+        print_list = LocationPrintList.for_user(user=request.user)
+        l = get_object_or_404(Location, pk=pk)
+        print_list.remove(l)
+        return HttpResponseRedirect(reverse('inventory:print_list'))
+    except:
+        return HttpResponseRedirect(reverse('inventory:print_list'))
 
 
 class AccountsProfile(LoginRequiredMixin, generic.DetailView):

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils.translation import gettext as _
+from django.contrib.auth.models import User
 
 ITEM_STATES = (
     ('d', 'default'),
@@ -28,6 +29,13 @@ class Location(MPTTModel):
             ('trash_location', 'Can trash location')
         ]
 
+class LocationPrintList(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    locations = models.ManyToManyField(Location)
+
+    def for_user(user):
+        return LocationPrintList.objects.get(user=user).locations
+    
 
 class Category(MPTTModel):
     name = models.CharField(max_length=200, verbose_name=_("Name"))
@@ -70,6 +78,6 @@ class Item(models.Model):
     class Meta:
         permissions = [
             ('trash_item', 'Can trash item'),
-            ('leden_item', 'Can lend item'),
+            ('lend_item', 'Can lend item'),
         ]
     

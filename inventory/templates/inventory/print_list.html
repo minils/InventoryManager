@@ -1,0 +1,31 @@
+{% extends 'inventory/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="row d-print-none">
+  <div class="col-auto">
+    <h2>{% trans 'Print List' %}</h2>
+  </div>
+  <div class="col-auto">
+    <a href="{% url 'inventory:print_list_clear' %}" class="btn btn-sm btn-outline-danger material-icons"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Clear' %}">
+      delete
+    </a>
+  </div>
+</div>
+{% if list %}
+<div class="container">
+  <div class="row row-cols-6 justify-content-start">
+    {% for location in list %}
+    <div class="col text-center text-nowrap pt-2 pb-2 border position-relative">
+      {% include 'inventory/location_barcode.html' %}
+      {{ location.name }}
+      <a class="d-print-none material-icons text-decoration-none text-danger position-absolute" style="top:0;right:0" href="{% url 'inventory:print_list_remove' location.pk %}" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Remove' %}">close</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+Empty
+{% endif %}
+{% endblock %}

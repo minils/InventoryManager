@@ -36,5 +36,9 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='inventory/landing.html'), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/profile/', views.AccountsProfile.as_view(), name='profile'),
+    path('accounts/print_list/', views.print_list, name='print_list'),
+    path('accounts/print_list/clear/', views.print_list_clear, name='print_list_clear'),
+    path('accounts/print_list/add/<int:pk>', views.print_list_add, name='print_list_add'),
+    path('accounts/print_list/remove/<int:pk>', views.print_list_remove, name='print_list_remove'),
     path('trash/', views.TrashView.as_view(), name='trash'),
 ]

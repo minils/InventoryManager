@@ -8,6 +8,10 @@
    data-toggle="tooltip" data-placement="bottom" title="{% trans 'Trash' %}">
   delete
 </a>
+<a href="{% url 'inventory:print_list_add' location.pk %}" class="btn btn-sm btn-outline-secondary material-icons"
+   data-toggle="tooltip" data-placement="bottom" title="{% trans 'Add to print list' %}">
+  print
+</a>
 {% else %}
 <a href="{% url 'inventory:locationuntrash' location.pk %}" class="btn btn-outline-secondary btn-sm"
    data-toggle="tooltip" data-placement="bottom" title="{% trans 'Restore' %}">

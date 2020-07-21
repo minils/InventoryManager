@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-02 13:53+0000\n"
-"PO-Revision-Date: 2020-03-02 14:54+0100\n"
+"POT-Creation-Date: 2020-07-21 17:01+0000\n"
+"PO-Revision-Date: 2020-07-21 19:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,99 +16,100 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
-#: inventory/forms.py:12 inventory/models.py:14 inventory/models.py:33
-#: inventory/models.py:54 inventory/templates/inventory/index.html:13
+#: inventory/forms.py:12 inventory/models.py:15 inventory/models.py:41
+#: inventory/models.py:62 inventory/templates/inventory/index.html:13
 #: inventory/templates/inventory/index.html:41
 #: inventory/templates/inventory/index.html:59
 #: inventory/templates/inventory/item_list.html:7
 #: inventory/templates/inventory/location_list_atom.html:7
+#: inventory/templates/inventory/user_detail.html:12
 msgid "Name"
 msgstr "Name"
 
-#: inventory/forms.py:13 inventory/models.py:20 inventory/models.py:37
-#: inventory/models.py:59 inventory/templates/inventory/category_detail.html:22
+#: inventory/forms.py:13 inventory/models.py:21 inventory/models.py:45
+#: inventory/models.py:67 inventory/templates/inventory/category_detail.html:22
 #: inventory/templates/inventory/item_list.html:8
 #: inventory/templates/inventory/location_detail.html:23
 #: inventory/templates/inventory/location_list_atom.html:8
 msgid "Description"
 msgstr "Beschreibung"
 
-#: inventory/forms.py:14 inventory/models.py:58
+#: inventory/forms.py:14 inventory/models.py:66
 msgid "Amount"
 msgstr "Menge"
 
-#: inventory/forms.py:15 inventory/models.py:57
+#: inventory/forms.py:15 inventory/models.py:65
 #: inventory/templates/inventory/index.html:14
 #: inventory/templates/inventory/item_list.html:9 inventory/views.py:108
 msgid "Location"
 msgstr "Ort"
 
-#: inventory/forms.py:16 inventory/models.py:60
+#: inventory/forms.py:16 inventory/models.py:68
 #: inventory/templates/inventory/index.html:15
 #: inventory/templates/inventory/item_list.html:10 inventory/views.py:125
 msgid "Category"
 msgstr "Kategorie"
 
-#: inventory/forms.py:17 inventory/models.py:61
+#: inventory/forms.py:17 inventory/models.py:69
 #: inventory/templates/inventory/location_detail.html:49
 msgid "Barcode"
 msgstr "Barcode"
 
-#: inventory/models.py:15
+#: inventory/models.py:16
 msgid "Creation date"
 msgstr "Erstellt"
 
-#: inventory/models.py:16
+#: inventory/models.py:17
 msgid "Change date"
 msgstr "Geändert"
 
-#: inventory/models.py:17
+#: inventory/models.py:18
 msgid "Parent"
 msgstr "Übergeordnet"
 
-#: inventory/models.py:18 inventory/templates/inventory/location_detail.html:27
+#: inventory/models.py:19 inventory/templates/inventory/location_detail.html:27
 msgid "Free space"
 msgstr "Freier Platz"
 
-#: inventory/models.py:19 inventory/templates/inventory/location_detail.html:37
+#: inventory/models.py:20 inventory/templates/inventory/location_detail.html:37
 #: inventory/templates/inventory/location_find.html:8
 msgid "UUID"
 msgstr "UUID"
 
-#: inventory/models.py:21 inventory/models.py:38 inventory/models.py:65
+#: inventory/models.py:22 inventory/models.py:46 inventory/models.py:73
 msgid "State"
 msgstr "Status"
 
-#: inventory/models.py:34 inventory/models.py:55
+#: inventory/models.py:42 inventory/models.py:63
 msgid "Creation Date"
 msgstr "Erstellt"
 
-#: inventory/models.py:35 inventory/models.py:56
+#: inventory/models.py:43 inventory/models.py:64
 msgid "Change Date"
 msgstr "Geändert"
 
-#: inventory/models.py:36
+#: inventory/models.py:44
 msgid "Supercategory"
 msgstr "Überkategorie"
 
-#: inventory/models.py:47 inventory/templates/inventory/base.html:97
+#: inventory/models.py:55 inventory/templates/inventory/base.html:97
 #: inventory/templates/inventory/category_list.html:5
 #: inventory/templates/inventory/search.html:28
 #: inventory/templates/inventory/trash.html:22 inventory/views.py:92
 msgid "Categories"
 msgstr "Kategorien"
 
-#: inventory/models.py:62
+#: inventory/models.py:70
 msgid "lent"
 msgstr "verliehen"
 
-#: inventory/models.py:63
+#: inventory/models.py:71
 msgid "Lent to"
 msgstr "Verliehen an"
 
-#: inventory/models.py:64
+#: inventory/models.py:72
 msgid "Lent Date"
 msgstr "Verliehen am"
 
@@ -118,7 +119,8 @@ msgstr "Zurück"
 
 #: inventory/templates/inventory/base.html:10
 #: inventory/templates/inventory/base.html:75
-#: inventory/templates/inventory/base.html:146
+#: inventory/templates/inventory/base.html:147
+#: inventory/templates/inventory/landing.html:47
 msgid "Inventory Manager"
 msgstr "Inventar Verwaltung"
 
@@ -169,23 +171,23 @@ msgstr "Neue Kategorie"
 #: inventory/templates/inventory/category_actions.html:8
 #: inventory/templates/inventory/item_actions.html:20
 #: inventory/templates/inventory/location_actions.html:8
-#: inventory/templates/inventory/trash.html:5 inventory/views.py:478
+#: inventory/templates/inventory/trash.html:5 inventory/views.py:518
 msgid "Trash"
 msgstr "Papierkorb"
 
-#: inventory/templates/inventory/base.html:115
+#: inventory/templates/inventory/base.html:116
 #: inventory/templates/inventory/search.html:5
 #: inventory/templates/inventory/search.html:35 inventory/views.py:52
 msgid "Search"
 msgstr "Suche"
 
-#: inventory/templates/inventory/base.html:121
-msgid "Logged in as"
-msgstr "Eingeloggt als"
+#: inventory/templates/inventory/base.html:123
+msgid "Hi, "
+msgstr "Hallo, "
 
-#: inventory/templates/inventory/base.html:146
-msgid "Account"
-msgstr "Konto"
+#: inventory/templates/inventory/base.html:147
+msgid "Admin"
+msgstr "Admin"
 
 #: inventory/templates/inventory/category_actions.html:4
 #: inventory/templates/inventory/item_actions.html:16
@@ -196,13 +198,13 @@ msgstr "Bearbeiten"
 
 #: inventory/templates/inventory/category_actions.html:13
 #: inventory/templates/inventory/item_actions.html:25
-#: inventory/templates/inventory/location_actions.html:13
+#: inventory/templates/inventory/location_actions.html:17
 msgid "Restore"
 msgstr "Wiederherstellen"
 
 #: inventory/templates/inventory/category_actions.html:17
 #: inventory/templates/inventory/item_actions.html:29
-#: inventory/templates/inventory/location_actions.html:17
+#: inventory/templates/inventory/location_actions.html:21
 msgid "Delete forever"
 msgstr "Endgültig löschen"
 
@@ -286,17 +288,21 @@ msgstr "Leer"
 msgid "Inventory Manager - Sign In"
 msgstr "Inventar Verwaltung - Anmeldung"
 
-#: inventory/templates/inventory/landing.html:26
+#: inventory/templates/inventory/landing.html:33
 msgid "Please sign in"
 msgstr "Bitte anmelden"
 
-#: inventory/templates/inventory/landing.html:32
+#: inventory/templates/inventory/landing.html:40
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: inventory/templates/inventory/landing.html:33
-msgid "Inventory Manager 2020"
-msgstr "Inventar Verwaltung 2020"
+#: inventory/templates/inventory/landing.html:44
+msgid "Your username and password didn't match. Please try again."
+msgstr "Benutzername und Passwort passen nicht zusammen. Versuche es erneut."
+
+#: inventory/templates/inventory/location_actions.html:12
+msgid "Add to print list"
+msgstr "Zur Druckliste hinzufügen"
 
 #: inventory/templates/inventory/location_detail.html:43
 msgid "Add"
@@ -328,6 +334,18 @@ msgstr "Zurück"
 msgid "Next"
 msgstr "Weiter"
 
+#: inventory/templates/inventory/print_list.html:7
+msgid "Print List"
+msgstr "Druckliste"
+
+#: inventory/templates/inventory/print_list.html:11
+msgid "Clear"
+msgstr "Zurücksetzen"
+
+#: inventory/templates/inventory/print_list.html:23
+msgid "Remove"
+msgstr "Entfernen"
+
 #: inventory/templates/inventory/search.html:10
 msgid "Search term"
 msgstr "Suchbegriff"
@@ -340,6 +358,34 @@ msgstr "Filter"
 #: inventory/templates/inventory/search.html:42
 msgid "Results"
 msgstr "Ergebnisse"
+
+#: inventory/templates/inventory/user_detail.html:5
+msgid "Account Detail"
+msgstr "Kontodetails"
+
+#: inventory/templates/inventory/user_detail.html:8
+msgid "Username"
+msgstr "Benutzername"
+
+#: inventory/templates/inventory/user_detail.html:15
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: inventory/templates/inventory/user_detail.html:19
+msgid "Password"
+msgstr "Passwort"
+
+#: inventory/templates/inventory/user_detail.html:20
+msgid "Change"
+msgstr "Geändert"
+
+#: inventory/templates/inventory/user_detail.html:23
+msgid "Go to"
+msgstr "Gehe zu"
+
+#: inventory/templates/inventory/user_detail.html:23
+msgid "print list"
+msgstr "Druckliste"
 
 #: inventory/views.py:51
 msgid "Search term must contain at least 3 letters."
@@ -412,6 +458,12 @@ msgstr "Kategorie löschen"
 #: inventory/views.py:373
 msgid "Cannot untrash non-trashed category"
 msgstr "Nicht gelöschte Kategorien können nicht wiederhergestellt werden"
+
+#~ msgid "Logged in as"
+#~ msgstr "Eingeloggt als"
+
+#~ msgid "Inventory Manager 2020"
+#~ msgstr "Inventar Verwaltung 2020"
 
 #~ msgid "More"
 #~ msgstr "Mehr"

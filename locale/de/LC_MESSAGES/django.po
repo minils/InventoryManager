@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-21 17:01+0000\n"
-"PO-Revision-Date: 2020-07-21 19:04+0200\n"
+"POT-Creation-Date: 2020-07-21 18:09+0000\n"
+"PO-Revision-Date: 2020-07-21 20:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -171,7 +171,7 @@ msgstr "Neue Kategorie"
 #: inventory/templates/inventory/category_actions.html:8
 #: inventory/templates/inventory/item_actions.html:20
 #: inventory/templates/inventory/location_actions.html:8
-#: inventory/templates/inventory/trash.html:5 inventory/views.py:518
+#: inventory/templates/inventory/trash.html:5 inventory/views.py:546
 msgid "Trash"
 msgstr "Papierkorb"
 
@@ -229,7 +229,9 @@ msgstr "Leer"
 #: inventory/templates/inventory/item_edit.html:11
 #: inventory/templates/inventory/item_lend.html:11
 #: inventory/templates/inventory/item_new.html:11
+#: inventory/templates/inventory/location_edit.html:11
 #: inventory/templates/inventory/location_new.html:11
+#: inventory/templates/inventory/location_new_multiple.html:15
 msgid "Save"
 msgstr "Speichern"
 
@@ -238,6 +240,7 @@ msgstr "Speichern"
 #: inventory/templates/inventory/item_lend.html:14
 #: inventory/templates/inventory/item_new.html:14
 #: inventory/templates/inventory/location_new.html:14
+#: inventory/templates/inventory/location_new_multiple.html:18
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -281,6 +284,7 @@ msgid "Tools"
 msgstr "Werkzeuge"
 
 #: inventory/templates/inventory/item_list.html:31
+#: inventory/templates/inventory/print_list.html:29
 msgid "Empty"
 msgstr "Leer"
 
@@ -305,12 +309,22 @@ msgid "Add to print list"
 msgstr "Zur Druckliste hinzufügen"
 
 #: inventory/templates/inventory/location_detail.html:43
+#: inventory/templates/inventory/location_detail.html:61
+#: inventory/templates/inventory/location_detail.html:70
 msgid "Add"
 msgstr "Hinzufügen"
 
 #: inventory/templates/inventory/location_detail.html:67
 msgid "Sublocations"
 msgstr "Untergeordnete Orte"
+
+#: inventory/templates/inventory/location_detail.html:71
+msgid "Add multiple"
+msgstr "Erstelle mehrere"
+
+#: inventory/templates/inventory/location_edit.html:5 inventory/views.py:151
+msgid "Edit Location"
+msgstr "Ort bearbeiten"
 
 #: inventory/templates/inventory/location_find.html:12
 msgid "Find"
@@ -323,6 +337,14 @@ msgstr "Orte mit freien Plätzen"
 #: inventory/templates/inventory/location_list_atom.html:9
 msgid "Free Space"
 msgstr "Freier Platz"
+
+#: inventory/templates/inventory/location_new_multiple.html:5
+msgid "New Location (multiple)"
+msgstr "Neuer Ort (mehrfach)"
+
+#: inventory/templates/inventory/location_new_multiple.html:10
+msgid "Amount:"
+msgstr "Menge:"
 
 #: inventory/templates/inventory/pagination.html:7
 #: inventory/templates/inventory/pagination.html:11
@@ -394,10 +416,6 @@ msgstr "Die Suchanfrage muss aus mindestens 3 Zeichen bestehen."
 #: inventory/views.py:135
 msgid "Item"
 msgstr "Artikel"
-
-#: inventory/views.py:151
-msgid "Edit Location"
-msgstr "Ort bearbeiten"
 
 #: inventory/views.py:202
 msgid "New item"

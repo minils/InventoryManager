@@ -1,0 +1,22 @@
+{% extends 'inventory/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "New Location (multiple)" %}</h1>
+<form class="form" method="post" action="{% url 'inventory:locationnewmulti' instance.parent.pk %}">
+  {% csrf_token %}
+  {% include 'inventory/form.html' %}
+  <div class="form-group">
+    <label for="id_amount">{% trans 'Amount:' %}</label>
+    <input name="amount" id="id_amount" type="number" class="form-control" value="2" />
+  </div>
+  <div class="form-row">
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    </div>
+    <div class="col-auto">
+      <input type="button" class="btn" onclick="window.history.back()" value="{% trans "Cancel" %}" />
+    </div>
+  </div>
+</form>
+{% endblock %}

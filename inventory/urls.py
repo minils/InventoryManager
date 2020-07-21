@@ -9,6 +9,7 @@ urlpatterns = [
     path('locations/', views.LocationsView.as_view(), name='locations'),
     path('location/<int:pk>/', views.LocationView.as_view(), name='location'),
     path('location/<int:pk>/new/', views.location_new, name='locationnew'),
+    path('location/<int:pk>/newmulti/', views.location_new_multiple, name='locationnewmulti'),
     path('location/<int:pk>/edit/', views.location_edit, name='locationedit'),
     path('location/<int:pk>/trash/', views.location_trash, name='locationtrash'),
     path('location/<int:pk>/untrash/', views.location_untrash, name='locationuntrash'),

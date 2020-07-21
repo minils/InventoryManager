@@ -429,6 +429,34 @@ def location_new(request, pk):
         'instance': instance,
     })
 
+@permission_required('inventory.add_location')
+def location_new_multiple(request, pk):
+    logger.warn("Yesssss")
+    parent = get_object_or_404(Location, pk=pk)
+    instance = Location(parent=parent)
+    if request.method == 'POST':
+        form = LocationEditForm(request.POST, instance=instance)
+
+        if form.is_valid() and 'amount' in request.POST:
+            # Create 'amount' locations and name them 'Name 1', 'Name 2', etc
+            try:
+                amount = int(request.POST['amount'])
+                for i in range(amount):
+                    l = Location.objects.create(name="{} {}".format(form.cleaned_data['name'], i+1),
+                                                description="{} {}".format(form.cleaned_data['description'], i+1),
+                                                parent=parent)
+                
+                return HttpResponseRedirect(reverse('inventory:location', args=(pk,)))
+            except:
+                return HttpResponseRedirect(reverse('inventory:location', args=(pk,)))
+    else:
+        form = LocationEditForm(instance=instance)
+
+    return render(request, 'inventory/location_new_multiple.html', {
+        'form': form,
+        'instance': instance,
+    })
+
 @permission_required('inventory.edit_location')
 def location_edit(request, pk):
     instance = get_object_or_404(Location, pk=pk)

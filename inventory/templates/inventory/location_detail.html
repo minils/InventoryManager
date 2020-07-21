@@ -48,7 +48,7 @@
   <tr>
     <th><span class="material-icons">camera_alt</span>{% trans "Barcode" %}</th>
     <td>
-      <img src="https://bwipjs-api.metafloor.com/?bcid=datamatrix&text={{ location.uuid }}" width="48" height="48">
+      {% include 'inventory/location_barcode.html' %}
     </td>
   </tr>
   {% endif %}
@@ -58,7 +58,7 @@
     <h2>{% trans "Items" %}</h2>
   </div>
   <div class="col-auto">
-    <a href="{% url 'inventory:locationnewitem' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
+    <a href="{% url 'inventory:locationnewitem' location.pk %}" class="btn btn-sm btn-outline-primary material-icons" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Add' %}">add</a>
   </div>
 </div>
 {% include 'inventory/item_list.html' with list=item_list next='location' %}
@@ -67,7 +67,8 @@
     <h2>{% trans "Sublocations" %}</h2>
   </div>
   <div class="col-auto">
-    <a href="{% url 'inventory:locationnew' location.pk %}" class="btn btn-sm btn-outline-primary material-icons">add</a>
+    <a href="{% url 'inventory:locationnew' location.pk %}" class="btn btn-sm btn-outline-primary material-icons" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Add' %}">add</a>
+    <a href="{% url 'inventory:locationnewmulti' location.pk %}" class="btn btn-sm btn-outline-primary material-icons" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Add multiple' %}">playlist_add</a>
   </div>
 </div>
 {% include 'inventory/location_list_atom.html' %}
